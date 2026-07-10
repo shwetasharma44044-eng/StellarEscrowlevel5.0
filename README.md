@@ -15,8 +15,8 @@ Designed for freelancers, independent contractors, small agencies, and clients, 
 
 ## 🌐 Live Demo
 
-*   **Live Web Application**: [s-stellar-escrow.vercel.app](https://s-stellar-escrow.vercel.app/)
-*   **Video Demonstration**: [Watch Live Demo](https://youtu.be/viEaqNnIvz0) *(1-2 minute walkthrough of key user flows)*
+*   **Live Web Application**: [stellar-escrowlevel-5.vercel.app](https://stellar-escrowlevel-5.vercel.app/)
+*   **Video Demonstration**: [Watch Live Demo](https://youtu.be/mEc1JLbf5g0) *(Level 5 walkthrough of key user flows)*
 
 ---
 
@@ -413,6 +413,7 @@ Below is a log of feature suggestions and feedback extracted directly from the u
 ### Pitch Deck & Demo
 - Pitch deck: [PITCH_DECK_LINK]
 - Demo video (full walkthrough): [YouTube Demo Video](https://youtu.be/mEc1JLbf5g0)
+- Live deployed DApp: [StellarEscrow on Vercel](https://stellar-escrowlevel-5.vercel.app/)
 
 ### Screenshots (Level 5)
 - **Refactored Antigravity Dashboard UI:** Displays glassmorphic milestone cards with vertical hovering animations and neon glows.
