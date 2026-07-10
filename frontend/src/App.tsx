@@ -264,6 +264,7 @@ export default function App() {
     try {
       const txHash = await actionFn();
       showNotification(`Milestone ${actionName} transaction successful!`, 'success', txHash);
+      trackEvent(`milestone_${actionName}`, { projectId, milestoneIndex, txHash });
       loadProjects();
     } catch (err: any) {
       console.error(`Action ${actionName} failed:`, err);
