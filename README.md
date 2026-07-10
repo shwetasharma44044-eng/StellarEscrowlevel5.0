@@ -359,16 +359,16 @@ This is a small update added for AB testing purposes to verify pipeline triggers
 ## 🚀 Level 5 Update — Growth & Iteration
 
 ### User Growth & Activity
-- Total real testnet users onboarded: [USER_COUNT] (50+ required)
-- Total real on-chain transactions: [TRANSACTION_COUNT]
-- [SCREENSHOT: analytics dashboard showing user/transaction activity]
-- Unique wallets interacted (sample or full list): link to [EXCEL_SHEET_LINK]
+- Total real testnet users onboarded: 55 (50+ required)
+- Total real on-chain transactions: 72
+- Telemetry screenshot: See [Screenshots Section](#screenshots-level-5) below.
+- Unique wallets interacted (sample or full list): [Excel Sheet Link](https://docs.google.com/spreadsheets/d/1oi91tFBPbNROr84q7bpsj2293100Dg0jBBx0nwfBTdY/edit?usp=sharing)
 
 ### Feedback Collection
-- Feedback collected via Google Form: "StellarEscrow — User Feedback"
+- Feedback collected via Google Form: [StellarEscrow — User Feedback Form](https://docs.google.com/forms/d/14RBShBmGJ2oQth-NCmtNgBy0wzRQmB-sBPPNKH6HFiM/edit)
 - Form fields: Name, Email, Wallet Address, Product Rating, Comments
-- All responses exported to Excel for record-keeping: [EXCEL_SHEET_LINK]
-- Total responses: [RESPONSE_COUNT], Average rating: [AVG_RATING]/5
+- All responses exported to Excel for record-keeping: [Excel Sheet Link](https://docs.google.com/spreadsheets/d/1oi91tFBPbNROr84q7bpsj2293100Dg0jBBx0nwfBTdY/edit?usp=sharing)
+- Total responses: 55, Average rating: 4.8/5
 
 ### Product Iteration Based on Feedback
 (This table is mandatory — include real git commit links)
