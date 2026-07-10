@@ -412,7 +412,7 @@ Below is a log of feature suggestions and feedback extracted directly from the u
 
 ### Pitch Deck & Demo
 - Pitch deck: [PITCH_DECK_LINK]
-- Demo video (full walkthrough): [DEMO_VIDEO_LINK]
+- Demo video (full walkthrough): [YouTube Demo Video](https://youtu.be/mEc1JLbf5g0)
 
 ### Screenshots (Level 5)
 - **Refactored Antigravity Dashboard UI:** Displays glassmorphic milestone cards with vertical hovering animations and neon glows.
