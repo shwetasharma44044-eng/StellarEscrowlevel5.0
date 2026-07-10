@@ -146,7 +146,7 @@ async function writeContract(
 
 // Helper to simulate a read-only transaction and extract response
 async function readContract(methodName: string, args: xdr.ScVal[] = []): Promise<unknown> {
-  const dummyAddress = 'GDLUYNSS2W6V6J7S7M2QJQ4XJQ4XJQ4XJQ4XJQ4XJQ4XJQ4XJQA'; // Random valid public key
+  const dummyAddress = 'GC5QY4FKOMCHAT53CPKKHEXZRRPSWS6YN5CGEWI2NBITDH6NTRSCCZ72'; // Valid testnet G-address
   const contract = new Contract(CONTRACT_ID);
   
   const dummyAccount = await server.getAccount(dummyAddress);
