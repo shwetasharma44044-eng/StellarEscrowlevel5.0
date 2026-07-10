@@ -375,16 +375,16 @@ Below is a log of feature suggestions and feedback extracted directly from the u
 
 | Name | Wallet Address | User Feature Suggestion | Implementing Commit Hash |
 |---|---|---|---|
-| Rohan Kumar | `GDDI4YI3...YRGC22` | Wallet address copy button lets users copy the address in one click instead of manual selection. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Rishi Singh | `GB53NBNY...JIWY` | Toast notification for transactions shows a small popup instantly on success or failure. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Ranjan Mehta | `GCHV2WCH...XJVN` | Button loading state during transaction disables the button and shows a spinner to prevent double clicks. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Nitish Sharma | `GAWG4DRZ...CTQ2R` | Copied tooltip on click shows a quick "Copied!" confirmation after copying. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Abhishek Kant | `GDFQXTWF...2D62` | Specific loading text replaces "Loading..." with "Confirming on Stellar network..." for more clarity. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Suraj pathak | `GAGOXEQI...PF7L` | Better empty state message guides users with "Create your first project to get started" instead of just "No projects". | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Rohit sharma | `GBMF3JE3...K44D` | Relative timestamp format shows "2 min ago" instead of a raw date and time. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Rohan shakya | `GDXCPO2L...YG635` | Input placeholder hints add helpful examples like "Starts with G..." in the wallet address field. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| riya Kumari | `GCCOJRSK...WXYO` | Dark and light mode toggle lets users switch the app's theme with one button. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
-| Saurabh kumar | `GBZSDOYI...BVCN` | Color coded status badges use yellow for pending, green for approved, and red for disputed for visual clarity. | `b3bcbd5f381e8a6043d4ae5f8b0c912085e2c500` |
+| Rohan Kumar | `GDDI4YI3...YRGC22` | Wallet address copy button lets users copy the address in one click instead of manual selection. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Rishi Singh | `GB53NBNY...JIWY` | Toast notification for transactions shows a small popup instantly on success or failure. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Ranjan Mehta | `GCHV2WCH...XJVN` | Button loading state during transaction disables the button and shows a spinner to prevent double clicks. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Nitish Sharma | `GAWG4DRZ...CTQ2R` | Copied tooltip on click shows a quick "Copied!" confirmation after copying. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Abhishek Kant | `GDFQXTWF...2D62` | Specific loading text replaces "Loading..." with "Confirming on Stellar network..." for more clarity. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Suraj pathak | `GAGOXEQI...PF7L` | Better empty state message guides users with "Create your first project to get started" instead of just "No projects". | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Rohit sharma | `GBMF3JE3...K44D` | Relative timestamp format shows "2 min ago" instead of a raw date and time. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Rohan shakya | `GDXCPO2L...YG635` | Input placeholder hints add helpful examples like "Starts with G..." in the wallet address field. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| riya Kumari | `GCCOJRSK...WXYO` | Dark and light mode toggle lets users switch the app's theme with one button. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+| Saurabh kumar | `GBZSDOYI...BVCN` | Color coded status badges use yellow for pending, green for approved, and red for disputed for visual clarity. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
 
 ### Product Iteration Based on Feedback
 (This table is mandatory — include real git commit links)
