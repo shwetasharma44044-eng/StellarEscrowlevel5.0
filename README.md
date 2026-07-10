@@ -242,58 +242,7 @@ If you want to build and deploy the contract yourself:
 
 ---
 
-## 📸 Screenshots
 
-### Desktop UI - Dashboard Overview
-![alt text](image-2.png)
-
-### Desktop UI - Create Project Flow
-![alt text](image.png)
-
-### Mobile Responsive Interface
-![alt text](image-1.png)
-
-### Analytics Dashboard & Event Log
-![alt text](image-3.png)
-
----
-
-## ⛓️ Proof of Real User Interactions
-
-Below is the verification of actual interactions executed on the Stellar Testnet:
-
-| # | Wallet Address (Shortened) | Action Performed | Transaction Hash | Stellar Explorer Link |
-|---|---|---|---|---|
-| 1 | `GDXYPPZL...UO2HFM3H` | `create_project` | `f0f6db5a26dbb036662b73679d20a4f4c55cbd295708bc4358d7061147750bd1` | [View Transaction](https://stellar.expert/explorer/testnet/tx/f0f6db5a26dbb036662b73679d20a4f4c55cbd295708bc4358d7061147750bd1) |
-| 2 | `GDXYPPZL...UO2HFM3H` | `fund_milestone` | `2f9551aa8d682e0ad72daf637c732c8aff12c14ea68a4dea58bc60d481906837` | [View Transaction](https://stellar.expert/explorer/testnet/tx/2f9551aa8d682e0ad72daf637c732c8aff12c14ea68a4dea58bc60d481906837) |
-| 3 | `GCETZMCZ...ETVZHRJL` | `submit_milestone` | `ebfd009a1adca61798980f39272882c79e1d79eb8d64da805cf81a948f6ad8e6` | [View Transaction](https://stellar.expert/explorer/testnet/tx/ebfd009a1adca61798980f39272882c79e1d79eb8d64da805cf81a948f6ad8e6) |
-| 4 | `GDXYPPZL...UO2HFM3H` | `approve_milestone` | `a4e591de3a25899f096a87936dc623f76296192f32620d6a51a7b509a6936060` | [View Transaction](https://stellar.expert/explorer/testnet/tx/a4e591de3a25899f096a87936dc623f76296192f32620d6a51a7b509a6936060) |
-| 5 | `GCMRA35S...BWEJK2IH` | `create_project` | `42f698242ac33b52bf96ce338a911e69a52915d3b6ad20df34de152325fad0ef` | [View Transaction](https://stellar.expert/explorer/testnet/tx/42f698242ac33b52bf96ce338a911e69a52915d3b6ad20df34de152325fad0ef) |
-| 6 | `GCMRA35S...BWEJK2IH` | `fund_milestone` | `4ea97dbfe3c7f7e9a413b8135f5f2d0c49e6494991dddbc29f6ec709d5c39341` | [View Transaction](https://stellar.expert/explorer/testnet/tx/4ea97dbfe3c7f7e9a413b8135f5f2d0c49e6494991dddbc29f6ec709d5c39341) |
-| 7 | `GBG7XSOE...E22MXMPN` | `submit_milestone` | `5838d22a24f3be31ea3f2f8294e2729f67c339a19f7024d5eb439f5fe45455ce` | [View Transaction](https://stellar.expert/explorer/testnet/tx/5838d22a24f3be31ea3f2f8294e2729f67c339a19f7024d5eb439f5fe45455ce) |
-| 8 | `GCMRA35S...BWEJK2IH` | `approve_milestone` | `03496c8bcfc99037b2b70d8d8097b289c3522829689150e013974699b9d390f4` | [View Transaction](https://stellar.expert/explorer/testnet/tx/03496c8bcfc99037b2b70d8d8097b289c3522829689150e013974699b9d390f4) |
-| 9 | `GCX4YBME...Y5XW6KMS` | `create_project` | `c43aeca5ceb658f6675b2f686c692059ae139b55298d5eb698c89cbc7660791e` | [View Transaction](https://stellar.expert/explorer/testnet/tx/c43aeca5ceb658f6675b2f686c692059ae139b55298d5eb698c89cbc7660791e) |
-| 10 | `GCX4YBME...Y5XW6KMS` | `fund_milestone` | `461a5a5c255781ae9886a215bccaf568fe08c623a832bc80b93c812a7200de53` | [View Transaction](https://stellar.expert/explorer/testnet/tx/461a5a5c255781ae9886a215bccaf568fe08c623a832bc80b93c812a7200de53) |
-
----
-
-## 📈 User Feedback Summary
-
-*   **Google Feedback Form**: [Submit Feedback / Review](https://docs.google.com/forms/d/e/1FAIpQLSexdbGV5XTjwVFyK-eN7243MU9HTFEGhOVUWFOxzD5QBU1Tjg/viewform?pli=1&pli=1)
-*   **Google Feedback Sheet**: [View Feedback Responses](https://docs.google.com/spreadsheets/d/1-hyBLrQSy3UaIC9Q8irXjOplOG4C_oTNqD7jekFAJJ4/edit?usp=sharing)
-
-User feedback was collected from onboarded testers via our Google Feedback Form and direct surveys. Out of 10+ active participants, we achieved an average product satisfaction score of **4.8 / 5.0**.
-
-**Key Positive Themes:**
-*   **On-Chain Verification:** Freelancers noted that seeing project funds locked in escrow gave them immediate peace of mind before writing a line of code.
-*   **Intuitive Interface:** Both clients and freelancers reported that the step-by-step milestone progression circles made the payment state very clear.
-*   **Freighter Wallet Simplicity:** Signing contract transactions with Freighter was described as smooth and fast.
-
-**Areas for Improvement:**
-*   **Mobile Support:** Some users requested integration of other wallet adapters (like Albedo or xBull) for a better mobile-first signature experience.
-*   **Notifications:** Requests were made for email/telegram alerts to notify developers when a client funds or approves a milestone.
-
----
 
 ## 📊 Monitoring & Analytics
 
