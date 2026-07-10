@@ -189,9 +189,13 @@ async function run() {
       const arbiterVal = Address.fromString(arbiter.publicKey()).toScVal();
       const tokenVal = Address.fromString(TOKEN_ADDRESS).toScVal();
       
+      const randomXlmAmounts = [50, 43, 3, 757, 564, 6, 675, 52, 41, 8, 63, 74, 95, 120, 85, 240, 15, 310];
+      const selectedAmount = randomXlmAmounts[pIdx % randomXlmAmounts.length];
+      const amountStroops = selectedAmount * 10000000; // Convert to Stroops
+
       const milestones = [
         {
-          amount: 10000000, // 10,000,000 stroops = 1 XLM
+          amount: amountStroops,
           description: `Milestone for project ${newProjectId}`,
           deadline: Math.floor(Date.now() / 1000) + 86400
         }
