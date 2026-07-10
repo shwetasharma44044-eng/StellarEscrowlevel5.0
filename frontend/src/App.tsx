@@ -37,6 +37,22 @@ import * as Sentry from '@sentry/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function App() {
+  // Theme state
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
+  });
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+  };
+
+  useEffect(() => {
+    document.body.className = theme === 'dark' ? 'bg-darkBg text-gray-100' : 'bg-gray-100 text-gray-800';
+    document.body.style.backgroundColor = theme === 'dark' ? '#080B11' : '#f3f4f6';
+  }, [theme]);
+
   // Onboarding Intro Modal state
   const [showIntroModal, setShowIntroModal] = useState(() => {
     return localStorage.getItem('hasSeenIntro') !== 'true';
@@ -306,39 +322,65 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen text-gray-100 flex flex-col relative bg-darkBg">
+    <div className={`min-h-screen flex flex-col relative transition-colors duration-300 ${
+      theme === 'dark' ? 'bg-darkBg text-gray-100' : 'bg-gray-100 text-gray-800'
+    }`}>
       {/* Background gradients */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl -z-10" />
+      {theme === 'dark' && (
+        <>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl -z-10" />
+        </>
+      )}
 
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-darkBorder glass px-4 py-3 flex items-center justify-between">
+      <header className={`sticky top-0 z-40 border-b px-4 py-3 flex items-center justify-between backdrop-blur-md ${
+        theme === 'dark' ? 'border-darkBorder bg-darkCard/50' : 'border-gray-200 bg-white/70'
+      }`}>
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent-600 to-clientPurple flex items-center justify-center font-bold text-lg text-white shadow-lg shadow-accent-500/15">
             SE
           </div>
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">StellarEscrow</h1>
+            <h1 className={`text-xl font-bold ${
+              theme === 'dark' ? 'bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent' : 'text-gray-900'
+            }`}>StellarEscrow</h1>
             <p className="text-[10px] text-gray-500 font-medium tracking-wide">MILESTONE ESCROW TRUSTWAY</p>
           </div>
         </div>
 
         {/* Network Status & Wallet Connect */}
         <div className="flex items-center space-x-3">
-          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-500/10 text-green-400 border border-green-500/20">
+          <button
+            onClick={toggleTheme}
+            className={`p-2 rounded-lg transition ${
+              theme === 'dark' ? 'bg-gray-800/80 text-yellow-400 hover:bg-gray-800' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+            }`}
+            title="Toggle Theme"
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+
+          <span className={`hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+            theme === 'dark' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-100 text-green-700 border border-green-200'
+          }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 mr-1.5 animate-pulse" />
             Stellar Testnet
           </span>
 
           {walletAddress ? (
-            <div className="flex items-center space-x-2 bg-darkCard/80 border border-darkBorder rounded-lg p-1">
-              <span className="text-xs px-2 font-mono text-gray-300">
+            <div className={`flex items-center space-x-2 border rounded-lg p-1 ${
+              theme === 'dark' ? 'bg-darkCard/80 border-darkBorder' : 'bg-white border-gray-300 shadow-sm'
+            }`}>
+              <span className={`text-xs px-2 font-mono ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                 {walletAddress.substring(0, 5)}...{walletAddress.substring(walletAddress.length - 4)}
                 {walletType && <span className="text-[9px] text-gray-500 ml-1.5">({walletType})</span>}
               </span>
               <button 
                 onClick={() => copyToClipboard(walletAddress)}
-                className="p-1 hover:bg-gray-800 rounded text-gray-400 hover:text-white transition"
+                className={`p-1 rounded transition ${
+                  theme === 'dark' ? 'hover:bg-gray-800 text-gray-400 hover:text-white' : 'hover:bg-gray-100 text-gray-500 hover:text-gray-900'
+                }`}
                 title="Copy Address"
               >
                 <Copy size={12} />
@@ -424,34 +466,43 @@ export default function App() {
       </AnimatePresence>
 
       {/* Action Notification Alert */}
-      {notification && (
-        <div className={`fixed top-16 right-4 z-[9999] p-4 rounded-xl shadow-xl border max-w-md animate-slide-in glass-card ${
-          notification.type === 'success' ? 'border-green-500/30 text-green-200' :
-          notification.type === 'error' ? 'border-red-500/30 text-red-200' : 'border-blue-500/30 text-blue-200'
-        }`}>
-          <div className="flex items-start space-x-3">
-            <div className="mt-0.5">
-              {notification.type === 'success' && <Check className="text-green-400" size={18} />}
-              {notification.type === 'error' && <AlertTriangle className="text-red-400" size={18} />}
-              {notification.type === 'info' && <Info className="text-blue-400" size={18} />}
+      <AnimatePresence>
+        {notification && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ type: 'spring', damping: 20, stiffness: 200 }}
+            className={`fixed top-16 right-4 z-[9999] p-4 rounded-xl shadow-xl border max-w-md backdrop-blur-md transition-colors duration-300 ${
+              theme === 'dark'
+                ? (notification.type === 'success' ? 'border-green-500/30 text-green-200 bg-green-950/40' : notification.type === 'error' ? 'border-red-500/30 text-red-200 bg-red-950/40' : 'border-blue-500/30 text-blue-200 bg-blue-950/40')
+                : (notification.type === 'success' ? 'border-green-300 text-green-800 bg-green-50 shadow-green-150/40' : notification.type === 'error' ? 'border-red-300 text-red-800 bg-red-50 shadow-red-150/40' : 'border-blue-300 text-blue-800 bg-blue-50 shadow-blue-150/40')
+            }`}
+          >
+            <div className="flex items-start space-x-3">
+              <div className="mt-0.5">
+                {notification.type === 'success' && <Check className="text-green-500" size={18} />}
+                {notification.type === 'error' && <AlertTriangle className="text-red-500" size={18} />}
+                {notification.type === 'info' && <Info className="text-blue-500" size={18} />}
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold">{notification.message}</p>
+                {notification.txHash && (
+                  <a 
+                    href={`https://stellar.expert/explorer/testnet/tx/${notification.txHash}`} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="mt-1 inline-flex items-center text-xs text-accent-500 hover:underline font-semibold"
+                  >
+                    View on StellarExpert
+                    <ExternalLink size={10} className="ml-1" />
+                  </a>
+                )}
+              </div>
             </div>
-            <div className="flex-1">
-              <p className="text-sm font-semibold">{notification.message}</p>
-              {notification.txHash && (
-                <a 
-                  href={`https://stellar.expert/explorer/testnet/tx/${notification.txHash}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="mt-1 inline-flex items-center text-xs text-accent-400 hover:text-accent-300 font-medium"
-                >
-                  View on StellarExpert
-                  <ExternalLink size={10} className="ml-1" />
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
@@ -555,7 +606,7 @@ export default function App() {
                           required
                           value={newFreelancer}
                           onChange={(e) => setNewFreelancer(e.target.value)}
-                          placeholder="e.g. GC5QY4FK..."
+                          placeholder="Starts with G... (e.g. GC5QY4FK...)"
                           className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
                             newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) 
                               ? 'border-red-500 focus:border-red-500' 
@@ -573,7 +624,7 @@ export default function App() {
                           type="text" 
                           value={newArbiter}
                           onChange={(e) => setNewArbiter(e.target.value)}
-                          placeholder="Arbiter to resolve disputes. Defaults to Client if empty."
+                          placeholder="Starts with G... (Optional)"
                           className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
                             newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) 
                               ? 'border-red-500 focus:border-red-500' 
@@ -624,7 +675,7 @@ export default function App() {
                                       items[index].description = e.target.value;
                                       setNewMilestones(items);
                                     }}
-                                    placeholder="Milestone description"
+                                    placeholder="e.g. Design Mockups"
                                     className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
                                   />
                                 </div>
@@ -640,7 +691,7 @@ export default function App() {
                                       items[index].amount = e.target.value;
                                       setNewMilestones(items);
                                     }}
-                                    placeholder="XLM Amount"
+                                    placeholder="e.g. 50 (XLM Amount)"
                                     className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
                                   />
                                 </div>
@@ -704,9 +755,7 @@ export default function App() {
                 </div>
                 <h3 className="text-lg font-bold text-gray-200">No Escrow Projects Found</h3>
                 <p className="text-sm text-gray-400 mt-2 max-w-md mx-auto leading-relaxed">
-                  {walletAddress 
-                    ? "You haven't created any freelance payment escrows yet. Securely fund your next project by creating an on-chain milestone escrow." 
-                    : "Please connect your client wallet to view and manage your freelance escrow contracts."}
+                  Create your first project to get started.
                 </p>
                 {!walletAddress ? (
                   <button 
@@ -763,9 +812,7 @@ export default function App() {
                 </div>
                 <h3 className="text-lg font-bold text-gray-200">No Assigned Projects</h3>
                 <p className="text-sm text-gray-400 mt-2 max-w-md mx-auto leading-relaxed">
-                  {walletAddress 
-                    ? "You haven't been assigned to any escrow projects yet. Give your client your public address to get started." 
-                    : "Please connect your freelancer wallet to securely view and manage escrow projects assigned to you."}
+                  Create your first project to get started.
                 </p>
                 {!walletAddress && (
                   <button 
@@ -1005,6 +1052,8 @@ function ProjectCard({
 }: ProjectCardProps) {
   const isProjectArbiter = userAddress && project.arbiter === userAddress;
   const [linkCopied, setLinkCopied] = useState(false);
+  const [copiedClient, setCopiedClient] = useState(false);
+  const [copiedFreelancer, setCopiedFreelancer] = useState(false);
 
   const handleShareProject = () => {
     const shareText = `I've created a secure escrow project for you on StellarEscrow. Connect your wallet here to view it: ${window.location.origin}`;
@@ -1013,9 +1062,21 @@ function ProjectCard({
     setTimeout(() => setLinkCopied(false), 2000);
   };
 
+  const handleCopyClient = () => {
+    navigator.clipboard.writeText(project.client);
+    setCopiedClient(true);
+    setTimeout(() => setCopiedClient(false), 2000);
+  };
+
+  const handleCopyFreelancer = () => {
+    navigator.clipboard.writeText(project.freelancer);
+    setCopiedFreelancer(true);
+    setTimeout(() => setCopiedFreelancer(false), 2000);
+  };
+
   const getStatusLabel = (status: number) => {
     switch (status) {
-      case 0: return { text: 'Created', color: 'bg-gray-700 text-gray-300', tooltip: 'Waiting for client to lock funds into the escrow contract.' };
+      case 0: return { text: 'Created', color: 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20', tooltip: 'Waiting for client to lock funds into the escrow contract.' };
       case 1: return { text: 'Funded', color: 'bg-blue-600/30 text-blue-400 border border-blue-500/20', tooltip: 'Funds are securely locked on-chain. Freelancer should start work.' };
       case 2: return { text: 'Submitted', color: 'bg-yellow-600/30 text-yellow-400 border border-yellow-500/20', tooltip: 'Work submitted by freelancer. Waiting for client review.' };
       case 4: return { text: 'Disputed', color: 'bg-red-600/30 text-red-400 border border-red-500/20', tooltip: 'Payment is disputed and locked. Awaiting arbiter resolution.' };
@@ -1059,6 +1120,13 @@ function ProjectCard({
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
             <span className="text-sm font-bold text-white">Project ID: #{project.id}</span>
+            <button
+              onClick={handleShareProject}
+              className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-800/80 text-gray-400 hover:text-white transition flex items-center space-x-1"
+              title="Copy shareable project link"
+            >
+              <span>{linkCopied ? 'Link Copied!' : 'Share'}</span>
+            </button>
             {isProjectArbiter && (
               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-accent-500/10 text-accent-400 border border-accent-500/20">
                 <Shield size={10} className="mr-1" />
@@ -1067,9 +1135,37 @@ function ProjectCard({
             )}
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs text-gray-500">
-            <span>Client: <span className="font-mono text-gray-400">{project.client.substring(0, 6)}...{project.client.substring(project.client.length - 6)}</span></span>
+            <span className="flex items-center">
+              Client: <span className="font-mono text-gray-400 ml-1">{project.client.substring(0, 6)}...{project.client.substring(project.client.length - 6)}</span>
+              <button 
+                onClick={handleCopyClient} 
+                className="ml-1 text-gray-500 hover:text-white transition relative inline-flex items-center justify-center cursor-pointer p-0.5"
+                title="Copy Address"
+              >
+                <Copy size={10} />
+                {copiedClient && (
+                  <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 text-[10px] text-white px-2 py-0.5 rounded shadow-lg z-50 whitespace-nowrap animate-bounce">
+                    Copied!
+                  </span>
+                )}
+              </button>
+            </span>
             <span className="hidden sm:inline">•</span>
-            <span>Freelancer: <span className="font-mono text-gray-400">{project.freelancer.substring(0, 6)}...{project.freelancer.substring(project.freelancer.length - 6)}</span></span>
+            <span className="flex items-center">
+              Freelancer: <span className="font-mono text-gray-400 ml-1">{project.freelancer.substring(0, 6)}...{project.freelancer.substring(project.freelancer.length - 6)}</span>
+              <button 
+                onClick={handleCopyFreelancer} 
+                className="ml-1 text-gray-500 hover:text-white transition relative inline-flex items-center justify-center cursor-pointer p-0.5"
+                title="Copy Address"
+              >
+                <Copy size={10} />
+                {copiedFreelancer && (
+                  <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 text-[10px] text-white px-2 py-0.5 rounded shadow-lg z-50 whitespace-nowrap animate-bounce">
+                    Copied!
+                  </span>
+                )}
+              </button>
+            </span>
           </div>
         </div>
 
@@ -1103,8 +1199,7 @@ function ProjectCard({
             const daysDiff = Math.ceil((deadline - now) / 86400);
             if (daysDiff < 0) return { text: `Overdue by ${Math.abs(daysDiff)} days`, color: 'text-red-400 bg-red-400/10 border-red-500/20' };
             if (daysDiff === 0) return { text: 'Due Today', color: 'text-yellow-400 bg-yellow-400/10 border-yellow-500/20' };
-            if (daysDiff <= 3) return { text: `Due in ${daysDiff} days`, color: 'text-orange-400 bg-orange-400/10 border-orange-500/20' };
-            return null;
+            return { text: `Due in ${daysDiff} days`, color: 'text-orange-400 bg-orange-400/10 border-orange-500/20' };
           };
           const deadlineBadge = getDeadlineStatus(milestone.deadline);
 
@@ -1227,7 +1322,14 @@ function ProjectCard({
                         onClick={() => onAction(project.id, index, 'fund', () => fundMilestone(userAddress, project.id, index))}
                         className="px-3.5 py-1.5 bg-clientPurple hover:bg-clientPurple/90 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
                       >
-                        {isCurrentLoading('fund') ? 'Funding...' : 'Fund Milestone (Lock XLM)'}
+                        {isCurrentLoading('fund') ? (
+                          <span className="flex items-center space-x-1.5">
+                            <RefreshCw size={11} className="animate-spin" />
+                            <span>Confirming on Stellar network...</span>
+                          </span>
+                        ) : (
+                          'Fund Milestone (Lock XLM)'
+                        )}
                       </button>
                     )}
 
@@ -1238,7 +1340,14 @@ function ProjectCard({
                         onClick={() => onAction(project.id, index, 'approve', () => approveMilestone(userAddress, project.id, index))}
                         className="px-3.5 py-1.5 bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
                       >
-                        {isCurrentLoading('approve') ? 'Approving...' : 'Approve & Release Funds'}
+                        {isCurrentLoading('approve') ? (
+                          <span className="flex items-center space-x-1.5">
+                            <RefreshCw size={11} className="animate-spin" />
+                            <span>Confirming on Stellar network...</span>
+                          </span>
+                        ) : (
+                          'Approve & Release Funds'
+                        )}
                       </button>
                     )}
 
@@ -1265,7 +1374,14 @@ function ProjectCard({
                           ))}
                           className="px-3.5 py-1.5 bg-red-600/20 hover:bg-red-600/30 border border-red-500/30 disabled:opacity-50 text-red-400 text-xs font-bold rounded-lg transition"
                         >
-                          {isCurrentLoading('dispute') ? 'Disputing...' : 'Raise Dispute'}
+                          {isCurrentLoading('dispute') ? (
+                            <span className="flex items-center space-x-1.5">
+                              <RefreshCw size={11} className="animate-spin" />
+                              <span>Confirming on Stellar network...</span>
+                            </span>
+                          ) : (
+                            'Raise Dispute'
+                          )}
                         </button>
                       </div>
                     )}
@@ -1277,7 +1393,14 @@ function ProjectCard({
                         onClick={() => onAction(project.id, index, 'refund', () => refundMilestone(userAddress, project.id, index))}
                         className="px-3.5 py-1.5 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
                       >
-                        {isCurrentLoading('refund') ? 'Refunding...' : 'Claim Expired Refund'}
+                        {isCurrentLoading('refund') ? (
+                          <span className="flex items-center space-x-1.5">
+                            <RefreshCw size={11} className="animate-spin" />
+                            <span>Confirming on Stellar network...</span>
+                          </span>
+                        ) : (
+                          'Claim Expired Refund'
+                        )}
                       </button>
                     )}
                   </>
@@ -1293,7 +1416,14 @@ function ProjectCard({
                         onClick={() => onAction(project.id, index, 'submit', () => submitMilestone(userAddress, project.id, index))}
                         className="px-3.5 py-1.5 bg-yellow-600 hover:bg-yellow-500 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
                       >
-                        {isCurrentLoading('submit') ? 'Submitting...' : 'Mark Complete & Submit'}
+                        {isCurrentLoading('submit') ? (
+                          <span className="flex items-center space-x-1.5">
+                            <RefreshCw size={11} className="animate-spin" />
+                            <span>Confirming on Stellar network...</span>
+                          </span>
+                        ) : (
+                          'Mark Complete & Submit'
+                        )}
                       </button>
                     )}
 
@@ -1305,7 +1435,14 @@ function ProjectCard({
                         className="px-3.5 py-1.5 bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 disabled:opacity-50 text-purple-400 text-xs font-bold rounded-lg transition"
                         title="Cancel milestone and return funds voluntarily to client"
                       >
-                        {isCurrentLoading('refund') ? 'Refunding...' : 'Cancel & Return Funds'}
+                        {isCurrentLoading('refund') ? (
+                          <span className="flex items-center space-x-1.5">
+                            <RefreshCw size={11} className="animate-spin" />
+                            <span>Confirming on Stellar network...</span>
+                          </span>
+                        ) : (
+                          'Cancel & Return Funds'
+                        )}
                       </button>
                     )}
                   </>
@@ -1320,14 +1457,28 @@ function ProjectCard({
                       onClick={() => onAction(project.id, index, 'resolve_client', () => resolveDispute(userAddress, project.id, index, true))}
                       className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-[11px] font-bold rounded-lg transition"
                     >
-                      {isCurrentLoading('resolve_client') ? 'Resolving...' : 'Resolve to Client'}
+                      {isCurrentLoading('resolve_client') ? (
+                        <span className="flex items-center space-x-1.5">
+                          <RefreshCw size={11} className="animate-spin" />
+                          <span>Confirming on Stellar network...</span>
+                        </span>
+                      ) : (
+                        'Resolve to Client'
+                      )}
                     </button>
                     <button
                       disabled={actionLoading !== null}
                       onClick={() => onAction(project.id, index, 'resolve_freelancer', () => resolveDispute(userAddress, project.id, index, false))}
                       className="px-3 py-1.5 bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-[11px] font-bold rounded-lg transition"
                     >
-                      {isCurrentLoading('resolve_freelancer') ? 'Resolving...' : 'Resolve to Freelancer'}
+                      {isCurrentLoading('resolve_freelancer') ? (
+                        <span className="flex items-center space-x-1.5">
+                          <RefreshCw size={11} className="animate-spin" />
+                          <span>Confirming on Stellar network...</span>
+                        </span>
+                      ) : (
+                        'Resolve to Freelancer'
+                      )}
                     </button>
                   </div>
                 )}
