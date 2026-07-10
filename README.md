@@ -404,4 +404,4 @@ This is a small update added for AB testing purposes to verify pipeline triggers
 - **Guided First-Time Onboarding Modal:** Guides new users directly inside the DApp to install Freighter Wallet and get test XLM from the Stellar Friendbot.
   ![StellarEscrow Guided Onboarding Flow](image-5.png)
 - **PostHog User Funnel & Activity Telemetry:** Proves active user interaction and transaction volume metrics on Stellar Testnet.
-  [SCREENSHOT: analytics proof of 50+ users]
+  ![StellarEscrow On-Chain Explorer History](image-7.png)
