@@ -30,11 +30,22 @@ import {
   DollarSign,
   ChevronRight,
   ExternalLink,
-  Copy
+  Copy,
+  ArrowRight
 } from 'lucide-react';
 import * as Sentry from '@sentry/react';
 
 export default function App() {
+  // Onboarding Intro Modal state
+  const [showIntroModal, setShowIntroModal] = useState(() => {
+    return localStorage.getItem('hasSeenIntro') !== 'true';
+  });
+
+  const closeIntroModal = () => {
+    localStorage.setItem('hasSeenIntro', 'true');
+    setShowIntroModal(false);
+  };
+
   // Wallet state
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [walletType, setWalletType] = useState<string | null>(null);
@@ -338,6 +349,58 @@ export default function App() {
           )}
         </div>
       </header>
+
+      {/* Onboarding Intro Modal */}
+      {showIntroModal && !walletAddress && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-md">
+          <div className="bg-darkCard border border-darkBorder w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl animate-scale-up">
+            <div className="p-8 text-center space-y-6">
+              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-accent-600 to-clientPurple flex items-center justify-center shadow-lg shadow-accent-500/20">
+                <Shield size={32} className="text-white" />
+              </div>
+              <h2 className="text-3xl font-bold text-white tracking-tight">Welcome to StellarEscrow</h2>
+              <p className="text-gray-400 max-w-xl mx-auto leading-relaxed">
+                The trustless milestone-based payment system for freelancers and clients. 
+                Before connecting your wallet, here is how you can get started on the Stellar Testnet.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-8">
+                <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Wallet size={48} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">1. Get a Wallet</h3>
+                  <p className="text-sm text-gray-400">Install the <a href="https://www.freighter.app/" target="_blank" rel="noreferrer" className="text-accent-400 hover:underline font-semibold">Freighter Extension</a> and set the network to Testnet.</p>
+                </div>
+                <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <DollarSign size={48} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">2. Fund Account</h3>
+                  <p className="text-sm text-gray-400">Get free test XLM from the <a href="https://laboratory.stellar.org/#account-creator?network=testnet" target="_blank" rel="noreferrer" className="text-clientPurple hover:underline font-semibold">Stellar Friendbot</a> by pasting your address.</p>
+                </div>
+                <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Check size={48} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">3. Start Escrow</h3>
+                  <p className="text-sm text-gray-400">Connect your wallet below to create a project or view milestones assigned to you.</p>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                <button 
+                  onClick={closeIntroModal}
+                  className="px-8 py-3 bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-500 hover:to-accent-600 text-white rounded-xl font-bold shadow-lg shadow-accent-600/25 transition-all hover:scale-105 flex items-center justify-center space-x-2 mx-auto"
+                >
+                  <span>I'm Ready to Connect</span>
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Action Notification Alert */}
       {notification && (
