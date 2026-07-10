@@ -391,11 +391,11 @@ Below is a log of feature suggestions and feedback extracted directly from the u
 
 | # | Feedback Theme | What Users Said | Change Made | Commit Link |
 |---|---|---|---|---|
-| 1 | Form Errors | "Transactions randomly fail if I paste an invalid wallet address." | Added real-time Stellar address validation to the Create Project form. | [COMMIT_LINK_1] |
-| 2 | Terminology | "I don't know what 'Funded' vs 'Created' means for my money." | Added native tooltips to milestone status badges for non-crypto users. | [COMMIT_LINK_2] |
-| 3 | Growth/Sharing | "It's hard to tell my freelancer where to find the project I just funded." | Added a 'Copy Invite Link' button to easily share the project URL. | [COMMIT_LINK_3] |
-| 4 | Onboarding Friction | "I didn't know I needed to get test XLM from Friendbot first." | Added an interactive "How it Works" modal before wallet connection. | [COMMIT_LINK_4] |
-| 5 | Deadlines | "I have to calculate timestamps in my head to know if I'm late." | Introduced dynamic status badges (e.g., "Due in 3 days", "Overdue"). | [COMMIT_LINK_5] |
+| 1 | Form Errors | "Transactions randomly fail if I paste an invalid wallet address." | Added real-time Stellar address validation to the Create Project form. | [710b479](https://github.com/shwetasharma44044-eng/StellarEscrowlevel-5/commit/710b47976485fbdab16652ce46292a9493ac02a0) |
+| 2 | Terminology | "I don't know what 'Funded' vs 'Created' means for my money." | Added native tooltips to milestone status badges for non-crypto users. | [b465d1c](https://github.com/shwetasharma44044-eng/StellarEscrowlevel-5/commit/b465d1c5c558e48bdb16f8dcd502d18e94d7ed62) |
+| 3 | Growth/Sharing | "It's hard to tell my freelancer where to find the project I just funded." | Added a 'Copy Invite Link' button to easily share the project URL. | [1aca8b2](https://github.com/shwetasharma44044-eng/StellarEscrowlevel-5/commit/1aca8b26b1951a1fdc1e280b5f443566869b348b) |
+| 4 | Onboarding Friction | "I didn't know I needed to get test XLM from Friendbot first." | Added an interactive "How it Works" modal before wallet connection. | [2d983d9](https://github.com/shwetasharma44044-eng/StellarEscrowlevel-5/commit/2d983d9a6914136f1bc4f2d966f53181cad811c7) |
+| 5 | Deadlines | "I have to calculate timestamps in my head to know if I'm late." | Introduced dynamic status badges (e.g., "Due in 3 days", "Overdue"). | [591f292](https://github.com/shwetasharma44044-eng/StellarEscrowlevel-5/commit/591f292eab9056700af6c579c7ef9d09e43bd53e) |
 
 ### UX/UI & Stability Improvements
 - **Guided Onboarding Modal**: Reduced first-time user friction by adding an upfront tutorial on Freighter and Friendbot.
