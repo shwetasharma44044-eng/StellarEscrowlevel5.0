@@ -34,6 +34,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import * as Sentry from '@sentry/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function App() {
   // Onboarding Intro Modal state
@@ -363,56 +364,64 @@ export default function App() {
       </header>
 
       {/* Onboarding Intro Modal */}
-      {showIntroModal && !walletAddress && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-md">
-          <div className="bg-darkCard border border-darkBorder w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl animate-scale-up">
-            <div className="p-8 text-center space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-accent-600 to-clientPurple flex items-center justify-center shadow-lg shadow-accent-500/20">
-                <Shield size={32} className="text-white" />
-              </div>
-              <h2 className="text-3xl font-bold text-white tracking-tight">Welcome to StellarEscrow</h2>
-              <p className="text-gray-400 max-w-xl mx-auto leading-relaxed">
-                The trustless milestone-based payment system for freelancers and clients. 
-                Before connecting your wallet, here is how you can get started on the Stellar Testnet.
-              </p>
+      <AnimatePresence>
+        {showIntroModal && !walletAddress && (
+          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-xl">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 30 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 180 }}
+              className="bg-darkCard/80 border border-darkBorder/60 w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/10 backdrop-blur-2xl"
+            >
+              <div className="p-8 text-center space-y-6">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-accent-600 to-clientPurple flex items-center justify-center shadow-lg shadow-accent-500/20">
+                  <Shield size={32} className="text-white" />
+                </div>
+                <h2 className="text-3xl font-bold text-white tracking-tight">Welcome to StellarEscrow</h2>
+                <p className="text-gray-400 max-w-xl mx-auto leading-relaxed">
+                  The trustless milestone-based payment system for freelancers and clients. 
+                  Before connecting your wallet, here is how you can get started on the Stellar Testnet.
+                </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-8">
-                <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Wallet size={48} />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-8">
+                  <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <Wallet size={48} />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">1. Get a Wallet</h3>
+                    <p className="text-sm text-gray-400">Install the <a href="https://www.freighter.app/" target="_blank" rel="noreferrer" className="text-accent-400 hover:underline font-semibold">Freighter Extension</a> and set the network to Testnet.</p>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">1. Get a Wallet</h3>
-                  <p className="text-sm text-gray-400">Install the <a href="https://www.freighter.app/" target="_blank" rel="noreferrer" className="text-accent-400 hover:underline font-semibold">Freighter Extension</a> and set the network to Testnet.</p>
-                </div>
-                <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <DollarSign size={48} />
+                  <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <DollarSign size={48} />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">2. Fund Account</h3>
+                    <p className="text-sm text-gray-400">Get free test XLM from the <a href="https://laboratory.stellar.org/#account-creator?network=testnet" target="_blank" rel="noreferrer" className="text-clientPurple hover:underline font-semibold">Stellar Friendbot</a> by pasting your address.</p>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">2. Fund Account</h3>
-                  <p className="text-sm text-gray-400">Get free test XLM from the <a href="https://laboratory.stellar.org/#account-creator?network=testnet" target="_blank" rel="noreferrer" className="text-clientPurple hover:underline font-semibold">Stellar Friendbot</a> by pasting your address.</p>
-                </div>
-                <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Check size={48} />
+                  <div className="bg-darkBg/50 p-5 rounded-xl border border-darkBorder/40 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <Check size={48} />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">3. Start Escrow</h3>
+                    <p className="text-sm text-gray-400">Connect your wallet below to create a project or view milestones assigned to you.</p>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">3. Start Escrow</h3>
-                  <p className="text-sm text-gray-400">Connect your wallet below to create a project or view milestones assigned to you.</p>
                 </div>
-              </div>
 
-              <div className="pt-6">
-                <button 
-                  onClick={closeIntroModal}
-                  className="px-8 py-3 bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-500 hover:to-accent-600 text-white rounded-xl font-bold shadow-lg shadow-accent-600/25 transition-all hover:scale-105 flex items-center justify-center space-x-2 mx-auto"
-                >
-                  <span>I'm Ready to Connect</span>
-                  <ArrowRight size={18} />
-                </button>
+                <div className="pt-6">
+                  <button 
+                    onClick={closeIntroModal}
+                    className="px-8 py-3 bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-500 hover:to-accent-600 text-white rounded-xl font-bold shadow-lg shadow-accent-600/25 transition-all hover:scale-105 flex items-center justify-center space-x-2 mx-auto"
+                  >
+                    <span>I'm Ready to Connect</span>
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Action Notification Alert */}
       {notification && (
@@ -1015,7 +1024,17 @@ function ProjectCard({
   };
 
   return (
-    <div className="bg-darkCard/60 border border-darkBorder/60 rounded-2xl overflow-hidden shadow-xl glass-card transition-all duration-300 hover:border-accent-500/25">
+    <motion.div 
+      initial={{ y: 0 }}
+      animate={{ y: [0, -6, 0] }}
+      transition={{
+        repeat: Infinity,
+        duration: 6,
+        ease: "easeInOut",
+        delay: (project.id || 0) % 2 === 0 ? 0 : 3
+      }}
+      className="bg-darkCard/60 border border-darkBorder/60 rounded-2xl overflow-hidden shadow-2xl shadow-cyan-500/5 glass-card transition-all duration-300 hover:border-accent-500/25 hover:shadow-cyan-500/10"
+    >
       {/* Project Header */}
       <div className="px-6 py-4 bg-gray-900/60 border-b border-darkBorder/60 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="space-y-1">
@@ -1071,7 +1090,18 @@ function ProjectCard({
           const deadlineBadge = getDeadlineStatus(milestone.deadline);
 
           return (
-            <div key={index} className="p-4 bg-darkBg/40 border border-darkBorder/60 rounded-xl space-y-4">
+            <motion.div 
+              key={index} 
+              initial={{ y: 0 }}
+              animate={{ y: [0, -3, 0] }}
+              transition={{
+                repeat: Infinity,
+                duration: 5 + index,
+                ease: "easeInOut",
+                delay: index * 0.3
+              }}
+              className="p-4 bg-darkBg/40 border border-darkBorder/60 rounded-xl space-y-4 shadow-xl shadow-black/10"
+            >
               {/* Milestone Info */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-darkBorder/40 pb-3">
                 <div className="space-y-1">
@@ -1112,61 +1142,61 @@ function ProjectCard({
                   
                   {/* Step 1: Created */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border font-bold text-xs ${
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                       milestone.status >= 0 
-                        ? 'bg-gray-900 border-gray-600 text-gray-300 shadow-md' 
-                        : 'bg-gray-950 border-gray-900 text-gray-700'
+                        ? 'bg-clientPurple text-white shadow-lg shadow-clientPurple/30 border-2 border-purple-400' 
+                        : 'bg-gray-800 text-gray-500 border border-gray-700'
                     }`}>
                       1
                     </div>
-                    <span className="text-[9px] text-gray-500 font-bold mt-1.5 uppercase">Created</span>
+                    <span className="text-[10px] text-gray-500 mt-1 font-semibold">Created</span>
                   </div>
 
                   {/* Step 2: Funded */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border font-bold text-xs ${
-                      milestone.status >= 1 && milestone.status !== 6 
-                        ? 'bg-blue-950/60 border-blue-500/50 text-blue-400 shadow-md shadow-blue-500/10' 
-                        : 'bg-gray-950 border-gray-900 text-gray-700'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                      milestone.status >= 1 
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border-2 border-blue-400' 
+                        : 'bg-gray-800 text-gray-500 border border-gray-700'
                     }`}>
                       2
                     </div>
-                    <span className="text-[9px] text-gray-500 font-bold mt-1.5 uppercase">Funded</span>
+                    <span className="text-[10px] text-gray-500 mt-1 font-semibold">Funded</span>
                   </div>
 
                   {/* Step 3: Submitted */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border font-bold text-xs ${
-                      milestone.status >= 2 && milestone.status !== 6 && milestone.status !== 4 
-                        ? 'bg-yellow-950/60 border-yellow-500/50 text-yellow-400 shadow-md shadow-yellow-500/10' 
-                        : 'bg-gray-950 border-gray-900 text-gray-700'
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                      milestone.status === 2 || milestone.status === 5 
+                        ? 'bg-yellow-600 text-white shadow-lg shadow-yellow-500/30 border-2 border-yellow-400' 
+                        : 'bg-gray-800 text-gray-500 border border-gray-700'
                     }`}>
                       3
                     </div>
-                    <span className="text-[9px] text-gray-500 font-bold mt-1.5 uppercase">Submitted</span>
+                    <span className="text-[10px] text-gray-500 mt-1 font-semibold">Submitted</span>
                   </div>
 
-                  {/* Step 4: Released/Reviewed */}
+                  {/* Step 4: Approved/Resolved */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border font-bold text-xs ${
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                       milestone.status === 5 
-                        ? 'bg-green-950/60 border-green-500/50 text-green-400 shadow-md shadow-green-500/10' 
+                        ? 'bg-green-600 text-white shadow-lg shadow-green-500/50 border-2 border-green-400 scale-110 green-glow' 
                         : milestone.status === 6 
-                        ? 'bg-purple-950/60 border-purple-500/50 text-purple-400' 
-                        : milestone.status === 4 
-                        ? 'bg-red-950/60 border-red-500/50 text-red-400' 
-                        : 'bg-gray-950 border-gray-900 text-gray-700'
+                        ? 'bg-purple-600 text-white border-2 border-purple-400'
+                        : milestone.status === 4
+                        ? 'bg-red-600 text-white shadow-lg shadow-red-500/30 border-2 border-red-400 animate-pulse'
+                        : 'bg-gray-800 text-gray-500 border border-gray-700'
                     }`}>
-                      {milestone.status === 5 ? <Check size={14} /> : milestone.status === 6 ? 'R' : milestone.status === 4 ? '!' : '4'}
+                      {milestone.status === 4 ? '!' : milestone.status === 6 ? '↺' : '✓'}
                     </div>
-                    <span className="text-[9px] text-gray-500 font-bold mt-1.5 uppercase">
-                      {milestone.status === 6 ? 'Refunded' : milestone.status === 4 ? 'Disputed' : 'Released'}
+                    <span className="text-[10px] text-gray-500 mt-1 font-semibold">
+                      {milestone.status === 4 ? 'Disputed' : milestone.status === 6 ? 'Refunded' : 'Released'}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Action Buttons Panel */}
+              {/* Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 {/* Client Flow Actions */}
                 {role === 'client' && userAddress === project.client && (
@@ -1176,25 +1206,25 @@ function ProjectCard({
                       <button
                         disabled={actionLoading !== null}
                         onClick={() => onAction(project.id, index, 'fund', () => fundMilestone(userAddress, project.id, index))}
-                        className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
+                        className="px-3.5 py-1.5 bg-clientPurple hover:bg-clientPurple/90 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
                       >
-                        {isCurrentLoading('fund') ? 'Funding...' : 'Deposit Locked Funds'}
+                        {isCurrentLoading('fund') ? 'Funding...' : 'Fund Milestone (Lock XLM)'}
                       </button>
                     )}
 
-                    {/* Approve/Dispute/Refund */}
-                    {(milestone.status === 1 || milestone.status === 2 || milestone.status === 4) && (
+                    {/* Approve Deliverable & Release Funds */}
+                    {milestone.status === 2 && (
                       <button
                         disabled={actionLoading !== null}
                         onClick={() => onAction(project.id, index, 'approve', () => approveMilestone(userAddress, project.id, index))}
                         className="px-3.5 py-1.5 bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-md transition"
                       >
-                        {isCurrentLoading('approve') ? 'Releasing...' : 'Approve & Release Payment'}
+                        {isCurrentLoading('approve') ? 'Approving...' : 'Approve & Release Funds'}
                       </button>
                     )}
 
-                    {/* Dispute Milestone */}
-                    {milestone.status === 2 && (
+                    {/* Raise Dispute (available when Funded or Submitted) */}
+                    {(milestone.status === 1 || milestone.status === 2) && (
                       <div className="flex items-center space-x-2">
                         <input 
                           type="text" 
@@ -1283,10 +1313,10 @@ function ProjectCard({
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }
