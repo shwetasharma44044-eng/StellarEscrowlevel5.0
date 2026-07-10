@@ -341,7 +341,7 @@ export default function App() {
 
       {/* Action Notification Alert */}
       {notification && (
-        <div className={`fixed top-16 right-4 z-50 p-4 rounded-xl shadow-xl border max-w-md animate-slide-in glass-card ${
+        <div className={`fixed top-16 right-4 z-[9999] p-4 rounded-xl shadow-xl border max-w-md animate-slide-in glass-card ${
           notification.type === 'success' ? 'border-green-500/30 text-green-200' :
           notification.type === 'error' ? 'border-red-500/30 text-red-200' : 'border-blue-500/30 text-blue-200'
         }`}>
