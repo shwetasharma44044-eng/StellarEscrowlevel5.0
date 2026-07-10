@@ -258,9 +258,24 @@ If you want to build and deploy the contract yourself:
 
 Based on the feedback collected during the Level 4 MVP phase, the following key improvements were implemented for this Level 5 release:
 
-1. **Guided First-Time Onboarding**: Added an interactive "How it Works" modal before wallet connection to reduce friction and guide users to Friendbot.
-2. **Milestone Deadline Visibility**: Introduced dynamic status badges (e.g., "Due in 3 days", "Overdue") to proactively address timeline confusion.
-3. **Smooth Loading States**: Implemented UI Skeleton Loaders for fetching projects, removing sudden layout shifts and improving perceived performance.
+| Feedback Theme | What Users Said (Summary) | Change Made | Git Commit Link |
+| :--- | :--- | :--- | :--- |
+| **Form Errors** | "Transactions randomly fail if I paste an invalid wallet address." | Added real-time Stellar address validation to the Create Project form. | [GITHUB_COMMIT_LINK] |
+| **Terminology** | "I don't know what 'Funded' vs 'Created' means for my money." | Added native tooltips to milestone status badges for non-crypto users. | [GITHUB_COMMIT_LINK] |
+| **Growth/Sharing** | "It's hard to tell my freelancer where to find the project I just funded." | Added a 'Copy Invite Link' button to easily share the project URL. | [GITHUB_COMMIT_LINK] |
+| **Onboarding Friction** | "I didn't know I needed to get test XLM from Friendbot first." | Added an interactive "How it Works" modal before wallet connection. | [GITHUB_COMMIT_LINK] |
+| **Deadlines** | "I have to calculate timestamps in my head to know if I'm late." | Introduced dynamic status badges (e.g., "Due in 3 days", "Overdue"). | [GITHUB_COMMIT_LINK] |
+
+*(Author note: Update the `[GITHUB_COMMIT_LINK]` placeholders with the actual URLs from your repository commits!)*
+
+---
+
+## 🛣️ Next Phase Roadmap (Level 6 & Beyond)
+
+While Level 5 scales our testnet user base, the long-term vision requires bridging the gap to real-world value:
+1. **Stellar Mainnet Deployment**: Migrating the contract to Mainnet and securing an audit.
+2. **Stellar Anchor Integration**: Directly integrating fiat-on-ramps (e.g. USDC) so non-crypto clients can fund escrow projects using credit cards.
+3. **Dispute Resolution DAO**: Moving away from a single hardcoded arbiter to a decentralized jury for disputes.
 
 ---
 
