@@ -517,166 +517,172 @@ export default function App() {
         <div className="flex items-center justify-end text-[11px] text-gray-500 space-x-1 font-medium">
           <RefreshCw size={10} className={`${loadingProjects ? 'animate-spin text-accent-500' : ''}`} />
           <span>{loadingProjects ? 'Fetching chain state...' : 'Synced live with Soroban RPC'}</span>
-        </div>
-
         {/* Tab content 1: Client view */}
         {activeTab === 'client' && (
           <div className="space-y-6">
             {/* Create Project Modal */}
-            {createModalOpen && (
-              <div className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-                <div className="bg-darkCard border border-darkBorder w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl animate-scale-up">
-                  <div className="px-6 py-4 bg-gray-900 border-b border-darkBorder flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-white flex items-center space-x-2">
-                      <Plus className="text-clientPurple" size={20} />
-                      <span>Create New Escrow Project</span>
-                    </h3>
-                    <button 
-                      onClick={() => setCreateModalOpen(false)}
-                      className="text-gray-400 hover:text-white transition text-sm font-bold"
-                    >
-                      Close
-                    </button>
-                  </div>
-
-                  <form onSubmit={handleCreateProject} className="p-6 space-y-4">
-                    <div>
-                      <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">Freelancer Public Address (G...)</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={newFreelancer}
-                        onChange={(e) => setNewFreelancer(e.target.value)}
-                        placeholder="e.g. GC5QY4FK..."
-                        className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
-                          newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) 
-                            ? 'border-red-500 focus:border-red-500' 
-                            : 'border-darkBorder focus:border-clientPurple'
-                        }`}
-                      />
-                      {newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) && (
-                        <p className="text-red-400 text-xs mt-1.5 flex items-center"><AlertTriangle size={12} className="mr-1" /> Invalid Stellar public key format.</p>
-                      )}
+            <AnimatePresence>
+              {createModalOpen && (
+                <div className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 backdrop-blur-md">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                    transition={{ type: 'spring', damping: 20, stiffness: 150 }}
+                    className="bg-darkCard/80 border border-darkBorder/60 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xl"
+                  >
+                    <div className="px-6 py-4 bg-gray-900 border-b border-darkBorder flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+                        <Plus className="text-clientPurple" size={20} />
+                        <span>Create New Escrow Project</span>
+                      </h3>
+                      <button 
+                        onClick={() => setCreateModalOpen(false)}
+                        className="text-gray-400 hover:text-white transition text-sm font-bold"
+                      >
+                        Close
+                      </button>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">Arbiter Public Address (Optional)</label>
-                      <input 
-                        type="text" 
-                        value={newArbiter}
-                        onChange={(e) => setNewArbiter(e.target.value)}
-                        placeholder="Arbiter to resolve disputes. Defaults to Client if empty."
-                        className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
-                          newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) 
-                            ? 'border-red-500 focus:border-red-500' 
-                            : 'border-darkBorder focus:border-clientPurple'
-                        }`}
-                      />
-                      {newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) && (
-                        <p className="text-red-400 text-xs mt-1.5 flex items-center"><AlertTriangle size={12} className="mr-1" /> Invalid Stellar public key format.</p>
-                      )}
-                    </div>
-
-                    <div className="border-t border-darkBorder/60 pt-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Project Milestones</label>
-                        <button 
-                          type="button"
-                          onClick={addMilestoneInput}
-                          className="flex items-center space-x-1 text-xs font-semibold text-clientPurple hover:text-clientPurple/80 transition"
-                        >
-                          <Plus size={12} />
-                          <span>Add Milestone</span>
-                        </button>
+                    <form onSubmit={handleCreateProject} className="p-6 space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">Freelancer Public Address (G...)</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={newFreelancer}
+                          onChange={(e) => setNewFreelancer(e.target.value)}
+                          placeholder="e.g. GC5QY4FK..."
+                          className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
+                            newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) 
+                              ? 'border-red-500 focus:border-red-500' 
+                              : 'border-darkBorder focus:border-clientPurple'
+                          }`}
+                        />
+                        {newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) && (
+                          <p className="text-red-400 text-xs mt-1.5 flex items-center"><AlertTriangle size={12} className="mr-1" /> Invalid Stellar public key format.</p>
+                        )}
                       </div>
 
-                      <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
-                        {newMilestones.map((m, index) => (
-                          <div key={index} className="p-3 bg-darkBg/60 border border-darkBorder/40 rounded-xl space-y-3">
-                            <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
-                              <span>Milestone #{index + 1}</span>
-                              {newMilestones.length > 1 && (
-                                <button 
-                                  type="button"
-                                  onClick={() => removeMilestoneInput(index)}
-                                  className="text-red-400 hover:text-red-300 transition"
-                                >
-                                  Remove
-                                </button>
-                              )}
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                              <div className="sm:col-span-2">
-                                <input 
-                                  type="text" 
-                                  required
-                                  value={m.description}
-                                  onChange={(e) => {
-                                    const items = [...newMilestones];
-                                    items[index].description = e.target.value;
-                                    setNewMilestones(items);
-                                  }}
-                                  placeholder="Milestone description"
-                                  className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
-                                />
+                      <div>
+                        <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">Arbiter Public Address (Optional)</label>
+                        <input 
+                          type="text" 
+                          value={newArbiter}
+                          onChange={(e) => setNewArbiter(e.target.value)}
+                          placeholder="Arbiter to resolve disputes. Defaults to Client if empty."
+                          className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
+                            newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) 
+                              ? 'border-red-500 focus:border-red-500' 
+                              : 'border-darkBorder focus:border-clientPurple'
+                          }`}
+                        />
+                        {newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) && (
+                          <p className="text-red-400 text-xs mt-1.5 flex items-center"><AlertTriangle size={12} className="mr-1" /> Invalid Stellar public key format.</p>
+                        )}
+                      </div>
+
+                      <div className="border-t border-darkBorder/60 pt-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Project Milestones</label>
+                          <button 
+                            type="button"
+                            onClick={addMilestoneInput}
+                            className="flex items-center space-x-1 text-xs font-semibold text-clientPurple hover:text-clientPurple/80 transition"
+                          >
+                            <Plus size={12} />
+                            <span>Add Milestone</span>
+                          </button>
+                        </div>
+
+                        <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+                          {newMilestones.map((m, index) => (
+                            <div key={index} className="p-3 bg-darkBg/60 border border-darkBorder/40 rounded-xl space-y-3">
+                              <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
+                                <span>Milestone #{index + 1}</span>
+                                {newMilestones.length > 1 && (
+                                  <button 
+                                    type="button"
+                                    onClick={() => removeMilestoneInput(index)}
+                                    className="text-red-400 hover:text-red-300 transition"
+                                  >
+                                    Remove
+                                  </button>
+                                )}
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div className="sm:col-span-2">
+                                  <input 
+                                    type="text" 
+                                    required
+                                    value={m.description}
+                                    onChange={(e) => {
+                                      const items = [...newMilestones];
+                                      items[index].description = e.target.value;
+                                      setNewMilestones(items);
+                                    }}
+                                    placeholder="Milestone description"
+                                    className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
+                                  />
+                                </div>
+                                <div>
+                                  <input 
+                                    type="number" 
+                                    required
+                                    step="0.0000001"
+                                    min="0.0000001"
+                                    value={m.amount}
+                                    onChange={(e) => {
+                                      const items = [...newMilestones];
+                                      items[index].amount = e.target.value;
+                                      setNewMilestones(items);
+                                    }}
+                                    placeholder="XLM Amount"
+                                    className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
+                                  />
+                                </div>
                               </div>
                               <div>
                                 <input 
-                                  type="number" 
+                                  type="date" 
                                   required
-                                  step="0.0000001"
-                                  min="0.0000001"
-                                  value={m.amount}
+                                  min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
+                                  value={m.deadline}
                                   onChange={(e) => {
-                                    const items = [...newMilestones];
-                                    items[index].amount = e.target.value;
-                                    setNewMilestones(items);
+                                      const items = [...newMilestones];
+                                      items[index].deadline = e.target.value;
+                                      setNewMilestones(items);
                                   }}
-                                  placeholder="XLM Amount"
                                   className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
                                 />
+                                <p className="text-[10px] text-gray-500 mt-1">Completion deadline for this milestone (must be tomorrow or later).</p>
                               </div>
                             </div>
-                            <div>
-                              <input 
-                                type="date" 
-                                required
-                                min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
-                                value={m.deadline}
-                                onChange={(e) => {
-                                    const items = [...newMilestones];
-                                    items[index].deadline = e.target.value;
-                                    setNewMilestones(items);
-                                }}
-                                className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple"
-                              />
-                              <p className="text-[10px] text-gray-500 mt-1">Completion deadline for this milestone (must be tomorrow or later).</p>
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="border-t border-darkBorder/60 pt-4 flex justify-end space-x-3">
-                      <button 
-                        type="button"
-                        onClick={() => setCreateModalOpen(false)}
-                        className="px-4 py-2 border border-darkBorder text-gray-400 hover:text-white rounded-lg text-sm font-semibold transition"
-                      >
-                        Cancel
-                      </button>
-                      <button 
-                        type="submit"
-                        disabled={submittingProject || (newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer)) || (newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter))}
-                        className="px-5 py-2 bg-gradient-to-r from-clientPurple to-indigo-600 hover:from-clientPurple/90 hover:to-indigo-600/90 text-white rounded-lg text-sm font-bold shadow-lg shadow-clientPurple/20 transition disabled:opacity-50"
-                      >
-                        {submittingProject ? 'Creating On-chain...' : 'Create & Deploy'}
-                      </button>
-                    </div>
-                  </form>
+                      <div className="border-t border-darkBorder/60 pt-4 flex justify-end space-x-3">
+                        <button 
+                          type="button"
+                          onClick={() => setCreateModalOpen(false)}
+                          className="px-4 py-2 border border-darkBorder text-gray-400 hover:text-white rounded-lg text-sm font-semibold transition"
+                        >
+                          Cancel
+                        </button>
+                        <button 
+                          type="submit"
+                          disabled={submittingProject || (newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer)) || (newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter))}
+                          className="px-5 py-2 bg-gradient-to-r from-clientPurple to-indigo-600 hover:from-clientPurple/90 hover:to-indigo-600/90 text-white rounded-lg text-sm font-bold shadow-lg shadow-clientPurple/20 transition disabled:opacity-50"
+                        >
+                          {submittingProject ? 'Creating On-chain...' : 'Create & Deploy'}
+                        </button>
+                      </div>
+                    </form>
+                  </motion.div>
                 </div>
-              </div>
-            )}
+              )}
+            </AnimatePresence>
 
             {/* Client Projects List */}
             {loadingProjects && projects.length === 0 ? (
@@ -684,7 +690,12 @@ export default function App() {
                 {[1, 2].map((i) => <SkeletonProjectCard key={i} />)}
               </div>
             ) : projects.filter(p => !walletAddress || p.client === walletAddress).length === 0 ? (
-              <div className="text-center py-16 border border-dashed border-darkBorder rounded-2xl bg-darkCard/20 flex flex-col items-center justify-center">
+              <motion.div 
+                initial={{ y: 0 }}
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="text-center py-16 border border-dashed border-darkBorder rounded-2xl bg-darkCard/20 flex flex-col items-center justify-center shadow-2xl shadow-cyan-500/5 backdrop-blur-md"
+              >
                 <div className="w-16 h-16 rounded-full bg-darkBg border border-darkBorder flex items-center justify-center mb-4">
                   <AlertTriangle size={24} className="text-gray-500" />
                 </div>
@@ -710,7 +721,7 @@ export default function App() {
                     <span>Create Your First Project</span>
                   </button>
                 )}
-              </div>
+              </motion.div>
             ) : (
               <div className="grid grid-cols-1 gap-6">
                 {projects.filter(p => !walletAddress || p.client === walletAddress).map((project) => (
@@ -738,7 +749,12 @@ export default function App() {
                 {[1, 2].map((i) => <SkeletonProjectCard key={i} />)}
               </div>
             ) : projects.filter(p => !walletAddress || p.freelancer === walletAddress).length === 0 ? (
-              <div className="text-center py-16 border border-dashed border-darkBorder rounded-2xl bg-darkCard/20 flex flex-col items-center justify-center">
+              <motion.div 
+                initial={{ y: 0 }}
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1 }}
+                className="text-center py-16 border border-dashed border-darkBorder rounded-2xl bg-darkCard/20 flex flex-col items-center justify-center shadow-2xl shadow-cyan-500/5 backdrop-blur-md"
+              >
                 <div className="w-16 h-16 rounded-full bg-darkBg border border-darkBorder flex items-center justify-center mb-4">
                   <Shield size={24} className="text-freelancerGreen/60" />
                 </div>
@@ -756,7 +772,7 @@ export default function App() {
                     Connect Wallet
                   </button>
                 )}
-              </div>
+              </motion.div>
             ) : (
               <div className="grid grid-cols-1 gap-6">
                 {projects.filter(p => !walletAddress || p.freelancer === walletAddress).map((project) => (
