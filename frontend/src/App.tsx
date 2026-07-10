@@ -503,13 +503,15 @@ export default function App() {
           </div>
 
           {activeTab === 'client' && (
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(139, 92, 246, 0.4)" }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setCreateModalOpen(true)}
-              className="mb-2 flex items-center space-x-1.5 px-3 py-1.5 bg-clientPurple hover:bg-clientPurple/90 text-white text-xs font-bold rounded-lg shadow-md transition"
+              className="mb-2 flex items-center space-x-1.5 px-3 py-1.5 bg-clientPurple text-white text-xs font-bold rounded-lg shadow-md transition cursor-pointer"
             >
               <Plus size={14} />
               <span>New Escrow Project</span>
-            </button>
+            </motion.button>
           )}
         </div>
 
