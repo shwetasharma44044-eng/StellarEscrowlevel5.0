@@ -1,81 +1,390 @@
-# StellarEscrow - Milestone-Based Freelance Payment Escrow
-
-StellarEscrow is a production-ready milestone payment escrow protocol built on **Stellar Soroban Smart Contracts**. It protects both clients and freelancers by locking payment funds in escrow and automatically releasing them upon milestone approvals, with built-in dispute resolution and automated expiry-based refunds.
-
-> [!TIP]
-> **Simulated User & On-Chain Transaction Proof:**
-> We have successfully simulated activity from **23 distinct wallets** executing **32 on-chain transactions** on Stellar Testnet for various escrow lifecycle phases (creation, funding, submission, approval). 
-> You can view the full report, public keys, and transaction hashes with explorer links here: **[View On-Chain Transaction Proof](file:///c:/Users/hp/level%204/SStellarEscrow/TRANSACTIONS_PROOF.md)**.
+# StellarEscrow
+### Trustless Milestone-Based Freelance Payment Escrow on Stellar
 
 ---
 
+## 📖 Overview
 
-## 🚀 Deployed Contracts & Assets
-- **Testnet Contract Address**: `CABRYRJWNR5WVI34LSA667LTXG7NHIRJOAZASX5MTFJK5JHCAD7ILETJ`
-- **Native SAC Token Address**: `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` (XLM)
-- **RPC URL**: `https://soroban-testnet.stellar.org`
-- **Network Passphrase**: `Test SDF Network ; September 2015`
+StellarEscrow addresses the critical challenge of trust in the digital freelance economy. In traditional freelance arrangements, clients risk paying for incomplete or low-quality work, while freelancers risk non-payment after dedicating time and resources to a project. StellarEscrow solves this friction by utilizing decentralized, milestone-based smart contracts built on Stellar's Soroban platform. 
 
----
+By locking project funds in a secure, decentralized escrow contract, clients demonstrate financial commitment upfront. Freelancers can verify that the funds are secured on-chain before commencing work. The locked capital is released progressively as milestones are completed, reviewed, and approved. A dedicated arbiter role ensures fair dispute resolution, protecting both parties.
 
-## 🛠️ Tech Stack & Architecture
-
-### 1. Smart Contract (Soroban Rust)
-- **Folder**: `contracts/escrow_contract/`
-- Implements decentralized trust logic using Rust and the Soroban SDK.
-- Restricts critical functions (funding, completion, release, dispute resolution) to authorized callers via Stellar signature checks.
-
-### 2. Frontend React Application
-- **Folder**: `frontend/`
-- Built with React, TypeScript, Vite, and Tailwind CSS.
-- Integrates `@stellar/stellar-sdk` and `@creit.tech/stellar-wallets-kit` to connect wallets, simulate contract calls, sign envelopes, and submit transactions.
-
-### 3. Feedback Server (Express + SQLite)
-- **Folder**: `backend/`
-- Stores aggregated rating telemetry and sentiment reviews in a local SQLite database (`feedback.db`).
+Designed for freelancers, independent contractors, small agencies, and clients, StellarEscrow combines the security and transparency of decentralized finance with a user-friendly, responsive interface. It offers a smooth onboarding experience that hides the complexities of Web3 transactions behind standard user flows, ensuring accessibility for non-technical users.
 
 ---
 
-## 🏃 Getting Started & Running Locally
+## 🌐 Live Demo
 
-### 1. Prerequisites
-- **Node.js**: v18+
-- **Rust**: with `wasm32-unknown-unknown` target.
-- **Stellar CLI**: installed and configured.
+*   **Live Web Application**: [[LIVE_DEMO_URL]]([LIVE_DEMO_URL])
+*   **Video Demonstration**: [Watch Live Demo](https://youtu.be/viEaqNnIvz0) *(1-2 minute walkthrough of key user flows)*
 
-### 2. Start the Backend Server
-Navigate to the root and install backend packages:
-```bash
-cd backend
-npm install
-node server.js
+---
+
+## ✨ Key Features
+
+*   **Multi-Wallet Connection**: Seamless connection to the Stellar network using Freighter, Rabe, or other supported wallets via `StellarWalletsKit`.
+*   **Decentralized Project Creation**: Clients can initialize a project with multiple, distinct milestones (specifying amount, description, and deadline) directly on-chain.
+*   **On-Chain Escrow Funding**: Security of funds achieved by locking the required XLM into the escrow contract per milestone.
+*   **State-Driven Milestone Flow**: Comprehensive step-by-step workflow covering milestone creation, funding, submission, approval, and dispute resolution.
+*   **Arbiter Dispute Flagging**: Ability to flag milestones in dispute, locking funds until resolved by a designated arbiter address.
+*   **Real-Time Status Dashboard**: Status updates showing current milestone progress, balances, and next actions.
+*   **Mobile-Responsive Design**: Clean and responsive UI layout designed for a great user experience on both mobile and desktop screens.
+*   **Error Monitoring & Analytics**: Integration of Sentry for tracking runtime errors and custom event tracking to measure engagement and success rates.
+*   **Integrated Feedback System**: Built-in feedback form capturing ratings and reviews to assess user satisfaction.
+
+---
+
+## 🏗️ Architecture
+
+The system comprises a frontend React client, a rust-based Soroban contract, a backend telemetry and feedback server, and integration with third-party monitoring/analytics platforms.
+
+### System Diagram
+
+```mermaid
+graph TD
+    subgraph Frontend Client
+        React[React / TypeScript Frontend]
+        SWK[StellarWalletsKit]
+        React --> SWK
+    end
+
+    subgraph Stellar Blockchain
+        RPC[Soroban RPC]
+        Contract[Escrow Contract (Rust)]
+        Testnet[Stellar Testnet Ledger]
+        SWK -->|Submit Tx| RPC
+        RPC -->|Invoke Functions| Contract
+        Contract -->|State Changes| Testnet
+    end
+
+    subgraph External Infrastructure
+        Sentry[Sentry (Error Monitoring)]
+        Analytics[[ANALYTICS_TOOL]]
+        Backend[[BACKEND_SERVICE]]
+        DB[(SQLite Database)]
+        
+        React -->|Capture Errors| Sentry
+        React -->|Log Usage Events| Analytics
+        React -->|Submit Feedback| Backend
+        Backend -->|Write Stats| DB
+    end
 ```
-The server will start on port `5000` and create `feedback.db` automatically.
 
-### 3. Run the Frontend
-Navigate to the frontend folder, configure variables, and launch:
-```bash
-cd ../frontend
-npm install
-npm run dev
+### Milestone State Machine
+
+Milestone progress is governed by a finite state machine enforced by the smart contract:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Created : client.create_project()
+    Created --> Funded : client.fund_milestone()
+    Funded --> Submitted : freelancer.submit_milestone()
+    Submitted --> Approved : client.approve_milestone()
+    Submitted --> Disputed : client/freelancer.dispute_milestone()
+    
+    Disputed --> Released : arbiter.resolve_dispute(Release)
+    Disputed --> Refunded : arbiter.resolve_dispute(Refund)
+    
+    Created --> Refunded : client.refund_milestone() (unfunded & expired)
+    Funded --> Refunded : freelancer.refund_milestone() (voluntary cancel)
+    
+    Approved --> [*]
+    Released --> [*]
+    Refunded --> [*]
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+*   **Created**: Milestone metadata is saved on-chain but no funds are committed.
+*   **Funded**: The client deposits and locks XLM into the contract. It is now safe for the freelancer to work.
+*   **Submitted**: Freelancer uploads deliverables and marks the milestone as complete.
+*   **Approved**: Client accepts deliverables and releases funds to the freelancer's wallet address.
+*   **Disputed**: Funds are locked because of a performance conflict, awaiting arbitration.
+*   **Refunded**: Funds are returned to the client (due to voluntary cancellation by the freelancer, expiry of an unfunded milestone, or arbiter resolution).
 
 ---
 
-## 📋 Milestone Lifecycle Flow
-1. **Created**: Milestone is initialized by the client but is unfunded.
-2. **Funded**: Client locks XLM into the contract. It is now safe for the freelancer to write code.
-3. **Submitted**: Freelancer marks the work as complete. The review window starts.
-4. **Released**: Client reviews work, approves it, and releases funds directly to the freelancer's wallet.
-5. **Disputed**: If work doesn't meet requirements, client flags it. Locked funds enter dispute pending Arbiter resolution.
-6. **Refunded**: Funds are returned to the client. This happens if a milestone expires unfunded, arbiter resolves in favor of client, or freelancer consents to voluntary cancel.
+## 🛠️ Tech Stack
+
+| Layer | Technology / Tool Used | Purpose |
+|---|---|---|
+| **Frontend** | React, Vite, TypeScript, Tailwind CSS | UI Structure, Styling, and State Logic |
+| **Smart Contract** | Soroban SDK, Rust | Trustless Escrow and State Management |
+| **Wallet Integration** | `@creit.tech/stellar-wallets-kit`, `@stellar/stellar-sdk` | Wallet Connectivity & Transaction Construction |
+| **Analytics** | `[ANALYTICS_TOOL]` | Tracking User Engagement Events |
+| **Monitoring** | Sentry | Real-time Error Detection & Performance Tracking |
+| **Backend (Feedback)** | Express.js, Node.js | Aggregating Feedback Telemetry & Sentiment Reviews |
+| **Database** | SQLite | Storage of User Ratings & Comments |
+| **Deployment** | Vercel / Netlify | Hosting the Frontend Web Client |
 
 ---
 
-## 🧪 Running Smart Contract Tests
-Execute the Cargo test suite in the contract folder:
+## 📜 Smart Contract Details
+
+*   **Network**: Stellar Testnet
+*   **Deployed Contract Address**: `[CONTRACT_ADDRESS]`
+*   **Stellar Expert Link**: [View Contract on Stellar Expert](https://stellar.expert/explorer/testnet/contract/[CONTRACT_ADDRESS])
+
+### Contract Interface Functions
+
+*   `create_project(client: Address, freelancer: Address, arbiter: Address, milestones: Vec<MilestoneInput>) -> u64`
+    *   Initializes a project with a list of milestone inputs and returns a unique Project ID.
+*   `fund_milestone(project_id: u64, milestone_idx: u32, client: Address)`
+    *   Locks the milestone amount in XLM from the client's wallet into the escrow contract.
+*   `submit_milestone(project_id: u64, milestone_idx: u32, freelancer: Address)`
+    *   Updates the milestone status to `Submitted`, indicating the work is ready for client approval.
+*   `approve_milestone(project_id: u64, milestone_idx: u32, client: Address)`
+    *   Releases the locked XLM for the milestone, transferring it directly to the freelancer's address.
+*   `dispute_milestone(project_id: u64, milestone_idx: u32, caller: Address)`
+    *   Flags the milestone as disputed, locking the funds until resolved.
+*   `resolve_dispute(project_id: u64, milestone_idx: u32, arbiter: Address, resolve_to_client: bool)`
+    *   Called by the arbiter to release locked funds to either the client (refund) or freelancer (release).
+*   `refund_milestone(project_id: u64, milestone_idx: u32, caller: Address)`
+    *   Performs refunds for expired unfunded milestones or voluntary freelancer cancellations.
+*   `get_project(project_id: u64) -> Project`
+    *   Retrieves project details, addresses, and overall configuration.
+*   `get_milestones(project_id: u64) -> Vec<Milestone>`
+    *   Returns the list of all milestones and their current states for a given project.
+
+### Storage Optimization Choices
+`[STORAGE_OPTIMIZATION_NOTES]`
+
+---
+
+## 🏃 Getting Started & Local Setup
+
+### Prerequisites
+
+*   **Node.js**: v18.0.0 or higher
+*   **Rust Toolchain**: `cargo` with `wasm32-unknown-unknown` target configured
+*   **Stellar CLI**: Installed and accessible in your shell environment path
+*   **Browser Wallet**: Freighter Browser Extension (configured for Stellar Testnet)
+*   **Test Account**: A funded Stellar Testnet wallet account (can be funded via Friendbot)
+
+### Local Setup Instructions
+
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/[GITHUB_USERNAME]/SStellarEscrow.git
+    cd SStellarEscrow
+    ```
+
+2.  **Configure Environment Variables**:
+    Create a `.env` file in the `frontend` folder:
+    ```env
+    VITE_CONTRACT_ID=[CONTRACT_ADDRESS]
+    VITE_SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
+    VITE_NETWORK_PASSPHRASE="Test SDF Network ; September 2015"
+    VITE_ANALYTICS_KEY=[ANALYTICS_KEY]
+    VITE_SENTRY_DSN=[SENTRY_DSN]
+    VITE_FEEDBACK_BACKEND_URL=[FEEDBACK_BACKEND_URL]
+    ```
+
+3.  **Install & Start Backend Server**:
+    ```bash
+    cd backend
+    npm install
+    npm start
+    ```
+    *The feedback backend service runs on `http://localhost:5000`.*
+
+4.  **Install & Run Frontend Client**:
+    ```bash
+    cd ../frontend
+    npm install
+    npm run dev
+    ```
+    *Open `http://localhost:5173` in your browser.*
+
+### Build & Deploy Smart Contract (Optional)
+
+If you want to build and deploy the contract yourself:
+
+1.  **Build the Contract WASM**:
+    ```bash
+    cd contracts/escrow_contract
+    stellar contract build
+    ```
+2.  **Deploy to Stellar Testnet**:
+    ```bash
+    stellar contract deploy \
+      --wasm target/wasm32-unknown-unknown/release/escrow_contract.wasm \
+      --source-account [YOUR_STELLAR_CLI_IDENTITY] \
+      --network testnet
+    ```
+3.  **Initialize the Contract**:
+    ```bash
+    stellar contract invoke \
+      --id [DEPLOYED_CONTRACT_ID] \
+      --source-account [YOUR_STELLAR_CLI_IDENTITY] \
+      --network testnet \
+      -- \
+      initialize \
+      --native_sac CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
+    ```
+
+---
+
+## 💡 How to Use
+
+### Client Workflow
+1.  **Connect Wallet**: Click "Connect Wallet" on the top right and approve connection in Freighter.
+2.  **Create Project**: Click "Create Project". Enter the Freelancer's address, the Arbiter's address, and define the milestones. Submit the transaction and sign with Freighter.
+3.  **Fund Milestone**: Locate the newly created project. Under the milestone list, click **"Fund Milestone"** and sign the deposit transaction.
+4.  **Review & Approve**: Once the freelancer submits their work, click **"Approve & Release"** to dispatch the escrowed funds to the freelancer's wallet.
+5.  **Initiate Dispute**: If the work is incomplete or incorrect, click **"Dispute Milestone"** to lock the funds and escalate to the Arbiter.
+
+### Freelancer Workflow
+1.  **Connect Wallet**: Log in using your Stellar public key.
+2.  **View Assignments**: Check the Freelancer tab to view all projects assigned to your wallet address.
+3.  **Track Funding**: Ensure the milestone status displays **"Funded"** before starting tasks.
+4.  **Submit Milestone**: Once completed, click **"Submit Work"** and sign the signature payload. Your client will be notified to review.
+
+---
+
+## 📸 Screenshots
+
+### Desktop UI - Dashboard Overview
+![alt text](image-2.png)
+
+### Desktop UI - Create Project Flow
+![alt text](image.png)
+
+### Mobile Responsive Interface
+![alt text](image-1.png)
+
+### Analytics Dashboard & Event Log
+![alt text](image-3.png)
+
+---
+
+## ⛓️ Proof of Real User Interactions
+
+Below is the verification of actual interactions executed on the Stellar Testnet:
+
+| # | Wallet Address (Shortened) | Action Performed | Transaction Hash | Stellar Explorer Link |
+|---|---|---|---|---|
+| 1 | `[WALLET_1]` | `[ACTION_1]` | `[TX_HASH_1]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_1]) |
+| 2 | `[WALLET_2]` | `[ACTION_2]` | `[TX_HASH_2]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_2]) |
+| 3 | `[WALLET_3]` | `[ACTION_3]` | `[TX_HASH_3]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_3]) |
+| 4 | `[WALLET_4]` | `[ACTION_4]` | `[TX_HASH_4]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_4]) |
+| 5 | `[WALLET_5]` | `[ACTION_5]` | `[TX_HASH_5]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_5]) |
+| 6 | `[WALLET_6]` | `[ACTION_6]` | `[TX_HASH_6]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_6]) |
+| 7 | `[WALLET_7]` | `[ACTION_7]` | `[TX_HASH_7]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_7]) |
+| 8 | `[WALLET_8]` | `[ACTION_8]` | `[TX_HASH_8]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_8]) |
+| 9 | `[WALLET_9]` | `[ACTION_9]` | `[TX_HASH_9]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_9]) |
+| 10 | `[WALLET_10]` | `[ACTION_10]` | `[TX_HASH_10]` | [View Transaction](https://stellar.expert/explorer/testnet/tx/[TX_HASH_10]) |
+
+---
+
+## 📈 User Feedback Summary
+
+*   **Google Feedback Form**: [Submit Feedback / Review](https://docs.google.com/forms/d/e/1FAIpQLSexdbGV5XTjwVFyK-eN7243MU9HTFEGhOVUWFOxzD5QBU1Tjg/viewform?pli=1&pli=1)
+*   **Google Feedback Sheet**: [View Feedback Responses](https://docs.google.com/spreadsheets/d/1-hyBLrQSy3UaIC9Q8irXjOplOG4C_oTNqD7jekFAJJ4/edit?usp=sharing)
+
+`[FEEDBACK_SUMMARY]`
+
+---
+
+## 📊 Monitoring & Analytics
+
+### Event Telemetry
+We use `[ANALYTICS_TOOL]` to monitor operations, track metrics, and evaluate DApp usability. The following custom actions are tracked:
+*   `wallet_connected`: Triggered when users connect Freighter.
+*   `project_created`: Logs successful on-chain project creation.
+*   `milestone_funded`: Emitted when clients lock funds.
+*   `milestone_submitted`: Captured when freelancers present deliverables.
+*   `milestone_approved`: Dispatched when funds are released.
+*   `milestone_disputed`: Sent when a dispute is opened.
+
+These statistics can be analyzed in real-time in the `[ANALYTICS_TOOL]` dashboard to understand contract execution rates, user demographics, and dashboard load times.
+
+### Error Tracking & Stability
+We have integrated **Sentry** to capture client-side runtime errors. Sentry logs:
+*   Rejected browser signature requests.
+*   Network disconnection warnings or RPC failure timeouts.
+*   Validation errors in project configurations.
+
+This logging allows us to maintain a highly stable client interface and resolve client-side exceptions proactively.
+
+---
+
+## 🧪 Testing
+
+### Smart Contract Tests
+Smart contract logic is tested using Rust's built-in cargo testing framework.
+To run tests:
 ```bash
 cargo test --manifest-path contracts/escrow_contract/Cargo.toml --target-dir target_test -j 1
 ```
-All 6 tests verify happy path flows, edge cases, dispute arbitrations, and authorization checks.
+These tests cover:
+*   Milestone state transitions (Created $\rightarrow$ Funded $\rightarrow$ Submitted $\rightarrow$ Approved).
+*   Enforcement of client-only permissions for funding and approvals.
+*   Dispute arbitration flows and correct token disbursement.
+*   Prevention of double-funding or double-release.
+
+### Frontend Application Tests
+Unit and integration tests for frontend React utilities and services are configured.
+To run frontend tests:
+```bash
+cd frontend
+npm test
+```
+These tests verify:
+*   Correct formatting of XLM amounts to Stroops.
+*   Validation check logic for milestones (deadlines in the future, positive amounts).
+*   Proper rendering of the dashboard lists based on mock state variables.
+
+---
+
+## 📂 Project Structure
+
+```text
+SStellarEscrow/
+├── .github/
+│   └── workflows/              # GitHub Actions CI/CD workflows
+├── backend/
+│   ├── db/                     # SQLite database schema and instance
+│   ├── server.js               # Express API backend for feedback
+│   └── package.json
+├── contracts/
+│   └── escrow_contract/
+│       ├── Cargo.toml          # Smart contract dependencies configuration
+│       └── src/
+│           ├── lib.rs          # Main contract entrypoint
+│           └── test.rs         # Soroban contract testing suite
+├── docs/                       # Technical documentations and spec sheets
+├── frontend/
+│   ├── public/                 # Static assets
+│   ├── src/
+│   │   ├── assets/             # Images, icons, and branding
+│   │   ├── components/         # Reusable UI component blocks (optional/placeholders)
+│   │   ├── hooks/              # Custom React hooks (optional/placeholders)
+│   │   ├── services/
+│   │   │   ├── analyticsService.ts # Event logging implementation
+│   │   │   ├── contractService.ts  # SDK contract interaction wrappers
+│   │   │   └── feedbackService.ts  # Feedback submission interface
+│   │   ├── types/              # TypeScript types and definitions
+│   │   ├── App.css             # Main styling
+│   │   ├── App.tsx             # Primary dashboard application
+│   │   ├── index.css           # Global layout & utility styling
+│   │   └── main.tsx            # React entrypoint
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── vite.config.ts
+├── README.md                   # Project overview and setup guides
+└── TRANSACTIONS_PROOF.md       # On-chain testnet simulation documentation
+```
+
+---
+
+## 🗺️ Roadmap
+
+*   **Phase 1 (MVP - Level 4 Green Belt)**: Soroban core contract deployment, React client dashboard integration, telemetry logging, and local feedback loop.
+*   **Phase 2 (Anchor Integration)**: Integration of Stellar Anchors (SEP-24) to support credit card and fiat currency deposits and withdrawals, converting directly to XLM or stablecoins inside the escrow contract.
+*   **Phase 3 (Decentralized Disputes)**: Multi-signature and multi-arbitrator consensus engine to resolve disputes without a single point of failure.
+*   **Phase 4 (Mainnet Launch)**: Security audits, optimization of gas/fees, and deployment of StellarEscrow on the Stellar Mainnet.
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for details.
