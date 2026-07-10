@@ -182,6 +182,16 @@ export default function App() {
       return;
     }
 
+    if (!/^G[A-Z0-9]{55}$/.test(newFreelancer)) {
+      showNotification('Invalid Freelancer address format', 'error');
+      return;
+    }
+
+    if (newArbiter && !/^G[A-Z0-9]{55}$/.test(newArbiter)) {
+      showNotification('Invalid Arbiter address format', 'error');
+      return;
+    }
+
     // Input validation
     try {
       const formattedMilestones = newMilestones.map((m) => {
@@ -527,8 +537,15 @@ export default function App() {
                         value={newFreelancer}
                         onChange={(e) => setNewFreelancer(e.target.value)}
                         placeholder="e.g. GC5QY4FK..."
-                        className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple font-mono"
+                        className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
+                          newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) 
+                            ? 'border-red-500 focus:border-red-500' 
+                            : 'border-darkBorder focus:border-clientPurple'
+                        }`}
                       />
+                      {newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer) && (
+                        <p className="text-red-400 text-xs mt-1.5 flex items-center"><AlertTriangle size={12} className="mr-1" /> Invalid Stellar public key format.</p>
+                      )}
                     </div>
 
                     <div>
@@ -538,8 +555,15 @@ export default function App() {
                         value={newArbiter}
                         onChange={(e) => setNewArbiter(e.target.value)}
                         placeholder="Arbiter to resolve disputes. Defaults to Client if empty."
-                        className="w-full bg-darkBg border border-darkBorder rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-clientPurple font-mono"
+                        className={`w-full bg-darkBg border rounded-lg px-3 py-2 text-sm text-gray-200 focus:outline-none font-mono ${
+                          newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) 
+                            ? 'border-red-500 focus:border-red-500' 
+                            : 'border-darkBorder focus:border-clientPurple'
+                        }`}
                       />
+                      {newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter) && (
+                        <p className="text-red-400 text-xs mt-1.5 flex items-center"><AlertTriangle size={12} className="mr-1" /> Invalid Stellar public key format.</p>
+                      )}
                     </div>
 
                     <div className="border-t border-darkBorder/60 pt-4">
@@ -632,7 +656,7 @@ export default function App() {
                       </button>
                       <button 
                         type="submit"
-                        disabled={submittingProject}
+                        disabled={submittingProject || (newFreelancer.length > 0 && !/^G[A-Z0-9]{55}$/.test(newFreelancer)) || (newArbiter.length > 0 && !/^G[A-Z0-9]{55}$/.test(newArbiter))}
                         className="px-5 py-2 bg-gradient-to-r from-clientPurple to-indigo-600 hover:from-clientPurple/90 hover:to-indigo-600/90 text-white rounded-lg text-sm font-bold shadow-lg shadow-clientPurple/20 transition disabled:opacity-50"
                       >
                         {submittingProject ? 'Creating On-chain...' : 'Create & Deploy'}
