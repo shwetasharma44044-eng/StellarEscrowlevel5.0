@@ -399,3 +399,9 @@ SStellarEscrow/
 ## 📄 License
 
 Distributed under the MIT License. See `LICENSE` for details.
+
+---
+
+## 🧪 AB Testing Note
+This is a small update added for AB testing purposes to verify pipeline triggers, commit signatures, and automated deployment integrations.
+
