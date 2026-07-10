@@ -249,19 +249,37 @@ slide5 = prs.slides.add_slide(blank_slide_layout)
 apply_background(slide5)
 add_header(slide5, "Intuitive Web3 User Experience")
 
-draw_card(slide5, Inches(0.8), Inches(2.0), Inches(3.6), Inches(4.5), 
-          "[SCREENSHOT: client creating a project]", 
-          ["Step 1: Setup Escrow Contract", "The client defines the milestones, deadline dates, and Freelancer/Arbiter public keys to deploy the contract on-chain."], 
+# Image 1: Dashboard UI
+try:
+    slide5.shapes.add_picture("image-6.png", Inches(0.8), Inches(2.0), Inches(3.6), Inches(2.3))
+except Exception as e:
+    draw_card(slide5, Inches(0.8), Inches(2.0), Inches(3.6), Inches(2.3), "Dashboard UI Image", [str(e)], BORDER_COLOR)
+
+draw_card(slide5, Inches(0.8), Inches(4.5), Inches(3.6), Inches(2.0), 
+          "1. Dashboard Overviews", 
+          ["The client/freelancer sees active escrow milestones, on-chain balances, and custom visual statuses."], 
           BORDER_COLOR)
 
-draw_card(slide5, Inches(4.8), Inches(2.0), Inches(3.6), Inches(4.5), 
-          "[SCREENSHOT: milestone funding]", 
-          ["Step 2: Lock Milestone Funds", "The client locks XLM tokens inside the escrow card. Funding states update instantly via Soroban events."], 
+# Image 2: Onboarding Flow
+try:
+    slide5.shapes.add_picture("image-5.png", Inches(4.8), Inches(2.0), Inches(3.6), Inches(2.3))
+except Exception as e:
+    draw_card(slide5, Inches(4.8), Inches(2.0), Inches(3.6), Inches(2.3), "Onboarding Flow Image", [str(e)], BORDER_COLOR)
+
+draw_card(slide5, Inches(4.8), Inches(4.5), Inches(3.6), Inches(2.0), 
+          "2. Guided Onboarding", 
+          ["Interactive tutorial directs first-time Web3 users to install Freighter and get test XLM from Friendbot."], 
           BORDER_COLOR)
 
-draw_card(slide5, Inches(8.8), Inches(2.0), Inches(3.6), Inches(4.5), 
-          "[SCREENSHOT: mobile view]", 
-          ["Step 3: Responsive Signatures", "Freelancers mark deliverables as complete, and client approves or disputes via a mobile-first responsive layout."], 
+# Image 3: PostHog / Telemetry
+try:
+    slide5.shapes.add_picture("image-7.png", Inches(8.8), Inches(2.0), Inches(3.6), Inches(2.3))
+except Exception as e:
+    draw_card(slide5, Inches(8.8), Inches(2.0), Inches(3.6), Inches(2.3), "Telemetry Image", [str(e)], BORDER_COLOR)
+
+draw_card(slide5, Inches(8.8), Inches(4.5), Inches(3.6), Inches(2.0), 
+          "3. Verified Telemetry", 
+          ["Integrated event trackers monitor active user funnels and Soroban ledger transactions live."], 
           BORDER_COLOR)
 
 
@@ -333,7 +351,7 @@ add_header(slide7, "Market Opportunity: Global Freelance Economy")
 draw_card(slide7, Inches(0.8), Inches(2.0), Inches(5.5), Inches(4.5), 
           "A Massively Expanding Global Market", 
           [
-              "• Market Size: [MARKET_SIZE_STAT] (to be updated with current audited global gig-economy metrics).",
+              "• Market Size: Projections reach $455 Billion by Mastercard gig economy studies.",
               "• Remote Work Adoption: The transition to remote-first collaboration has amplified cross-border hiring.",
               "• Transaction Overhead: Over $100 Billion is spent annually in bank fees and marketplace cuts.",
               "• Maturing Rails: Web3 wallet usage and native currency adoption are hitting mainstream thresholds."
@@ -364,7 +382,7 @@ s1.line.color.rgb = BORDER_COLOR
 s1_tf = s1.text_frame
 s1_tf.word_wrap = True
 s1_p1 = s1_tf.paragraphs[0]
-s1_p1.text = "[USER_COUNT]+"
+s1_p1.text = "55+"
 s1_p1.font.name = "Trebuchet MS"
 s1_p1.font.size = Pt(44)
 s1_p1.font.bold = True
@@ -385,7 +403,7 @@ s2.line.color.rgb = BORDER_COLOR
 s2_tf = s2.text_frame
 s2_tf.word_wrap = True
 s2_p1 = s2_tf.paragraphs[0]
-s2_p1.text = "[TRANSACTION_COUNT]+"
+s2_p1.text = "72+"
 s2_p1.font.name = "Trebuchet MS"
 s2_p1.font.size = Pt(44)
 s2_p1.font.bold = True
@@ -406,7 +424,7 @@ s3.line.color.rgb = BORDER_COLOR
 s3_tf = s3.text_frame
 s3_tf.word_wrap = True
 s3_p1 = s3_tf.paragraphs[0]
-s3_p1.text = "[FEEDBACK_RATING] / 5"
+s3_p1.text = "4.8 / 5"
 s3_p1.font.name = "Trebuchet MS"
 s3_p1.font.size = Pt(44)
 s3_p1.font.bold = True
@@ -553,7 +571,7 @@ p_c2.space_before = Pt(14)
 
 p_c3 = close_tf.add_paragraph()
 p_c3.alignment = PP_ALIGN.CENTER
-p_c3.text = "Live Demo: [DEMO_LINK]  •  GitHub: [GITHUB_LINK]"
+p_c3.text = "Live Demo: stellar-escrowlevel-5.vercel.app  •  GitHub: github.com/shwetasharma44044-eng/StellarEscrowlevel-5"
 p_c3.font.name = "Calibri"
 p_c3.font.size = Pt(16)
 p_c3.font.color.rgb = ACCENT_BLUE
