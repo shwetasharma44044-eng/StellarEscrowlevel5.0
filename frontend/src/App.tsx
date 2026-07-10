@@ -1015,7 +1015,7 @@ function ProjectCard({
   };
 
   return (
-    <div className="bg-darkCard border border-darkBorder rounded-2xl overflow-hidden shadow-lg shadow-black/20">
+    <div className="bg-darkCard/60 border border-darkBorder/60 rounded-2xl overflow-hidden shadow-xl glass-card transition-all duration-300 hover:border-accent-500/25">
       {/* Project Header */}
       <div className="px-6 py-4 bg-gray-900/60 border-b border-darkBorder/60 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="space-y-1">

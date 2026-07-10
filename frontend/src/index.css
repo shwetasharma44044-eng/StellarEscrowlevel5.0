@@ -2,9 +2,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-darkBg: #0B0F19;
-  --color-darkCard: #111827;
-  --color-darkBorder: #1F2937;
+  --color-darkBg: #080B11;
+  --color-darkCard: #101623;
+  --color-darkBorder: #1E293B;
   
   --color-accent-50: #EEF2F6;
   --color-accent-100: #D2E0EE;
@@ -24,7 +24,7 @@
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #0B0F19;
+  background-color: #080B11;
   color: #F3F4F6;
   margin: 0;
   padding: 0;
@@ -37,27 +37,51 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0F19;
+  background: #080B11;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1F2937;
+  background: #1E293B;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #334155;
 }
 
 /* Glassmorphism Classes */
 .glass {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(16, 22, 35, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .glass-card {
-  background: rgba(31, 41, 55, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(16, 22, 35, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
+
+/* Accent Glows */
+.purple-glow {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+}
+
+.green-glow {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.blue-glow {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.5; }
+}
+
+.pulse-glow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
+
