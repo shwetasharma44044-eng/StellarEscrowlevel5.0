@@ -451,7 +451,7 @@ This is a small update added for AB testing purposes to verify pipeline triggers
 
 ### Screenshots (Level 5)
 - **Refactored Antigravity Dashboard UI:** Displays glassmorphic milestone cards with vertical hovering animations and neon glows.
-  ![StellarEscrow Refactored UI](image-4.png)
+  ![StellarEscrow Refactored UI](image-6.png)
 - **Guided First-Time Onboarding Modal:** Guides new users directly inside the DApp to install Freighter Wallet and get test XLM from the Stellar Friendbot.
   ![StellarEscrow Guided Onboarding Flow](image-5.png)
 - **PostHog User Funnel & Activity Telemetry:** Proves active user interaction and transaction volume metrics on Stellar Testnet.
