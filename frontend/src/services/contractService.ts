@@ -113,6 +113,9 @@ async function writeContract(
     if (rpc.Api.isSimulationSuccess(simulation)) {
       const assembledTx = rpc.assembleTransaction(tx, simulation).build();
       
+      console.log('assembledTx constructor name:', assembledTx ? assembledTx.constructor.name : 'undefined');
+      console.log('assembledTx methods:', assembledTx ? Object.getOwnPropertyNames(Object.getPrototypeOf(assembledTx)) : []);
+      
       // Request Freighter / Wallet Kit signature using static class
       const { signedTxXdr } = await StellarWalletsKit.signTransaction(assembledTx.toEnvelope().toXDR('base64'), {
         address: userAddress,
