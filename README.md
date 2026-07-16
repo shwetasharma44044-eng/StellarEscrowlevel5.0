@@ -370,32 +370,53 @@ This is a small update added for AB testing purposes to verify pipeline triggers
 - All responses exported to Excel for record-keeping: [Excel Sheet Link](https://docs.google.com/spreadsheets/d/1oi91tFBPbNROr84q7bpsj2293100Dg0jBBx0nwfBTdY/edit?usp=sharing)
 - Total responses: 55, Average rating: 4.8/5
 
-#### User Suggestions Log
-Below is a log of feature suggestions and feedback extracted directly from the user responses:
+### 📊 Feedback Analysis & Implementation Logs
 
-| Name | Wallet Address | User Feature Suggestion | Implementing Commit Hash |
-|---|---|---|---|
-| Rohan Kumar | `GDDI4YI3...YRGC22` | Wallet address copy button lets users copy the address in one click instead of manual selection. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Rishi Singh | `GB53NBNY...JIWY` | Toast notification for transactions shows a small popup instantly on success or failure. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Ranjan Mehta | `GCHV2WCH...XJVN` | Button loading state during transaction disables the button and shows a spinner to prevent double clicks. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Nitish Sharma | `GAWG4DRZ...CTQ2R` | Copied tooltip on click shows a quick "Copied!" confirmation after copying. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Abhishek Kant | `GDFQXTWF...2D62` | Specific loading text replaces "Loading..." with "Confirming on Stellar network..." for more clarity. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Suraj pathak | `GAGOXEQI...PF7L` | Better empty state message guides users with "Create your first project to get started" instead of just "No projects". | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Rohit sharma | `GBMF3JE3...K44D` | Relative timestamp format shows "2 min ago" instead of a raw date and time. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Rohan shakya | `GDXCPO2L...YG635` | Input placeholder hints add helpful examples like "Starts with G..." in the wallet address field. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| riya Kumari | `GCCOJRSK...WXYO` | Dark and light mode toggle lets users switch the app's theme with one button. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
-| Saurabh kumar | `GBZSDOYI...BVCN` | Color coded status badges use yellow for pending, green for approved, and red for disputed for visual clarity. | `0d34d2104d0523d228faaf2819e3adf0c5ddb559` |
+Below are the two feedback and implementation tables required for Level 5:
 
-### Product Iteration Based on Feedback
-(This table is mandatory — include real git commit links)
+#### 1. Users Onboarded (10+ Users)
 
-| # | Feedback Theme | What Users Said | Change Made | Commit Link |
+This table lists the unique testnet users onboarded, showing their details and their feedback summary:
+
+| User ID | Name | Email | Wallet Address | Feedback Summary |
 |---|---|---|---|---|
-| 1 | Form Errors | "Transactions randomly fail if I paste an invalid wallet address." | Added real-time Stellar address validation to the Create Project form. | [710b479](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/710b47976485fbdab16652ce46292a9493ac02a0) |
-| 2 | Terminology | "I don't know what 'Funded' vs 'Created' means for my money." | Added native tooltips to milestone status badges for non-crypto users. | [b465d1c](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/b465d1c5c558e48bdb16f8dcd502d18e94d7ed62) |
-| 3 | Growth/Sharing | "It's hard to tell my freelancer where to find the project I just funded." | Added a 'Copy Invite Link' button to easily share the project URL. | [1aca8b2](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/1aca8b26b1951a1fdc1e280b5f443566869b348b) |
-| 4 | Onboarding Friction | "I didn't know I needed to get test XLM from Friendbot first." | Added an interactive "How it Works" modal before wallet connection. | [2d983d9](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/2d983d9a6914136f1bc4f2d966f53181cad811c7) |
-| 5 | Deadlines | "I have to calculate timestamps in my head to know if I'm late." | Introduced dynamic status badges (e.g., "Due in 3 days", "Overdue"). | [591f292](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/591f292eab9056700af6c579c7ef9d09e43bd53e) |
+| `USR-001` | Rohan Kumar | `Rohan809raj@gmail.com` | `GDDI4YI3EKLBKAYAFONHCPGJXVATJYZQ4G7DHEZ5X3DKOBBIR6YRGC22` | Wants a wallet address copy button to quickly copy instead of manual selection. |
+| `USR-002` | Rishi Singh | `rishi55443322@gmail.com` | `GB53NBNY2RWG737KLGB4ZSTZGR66IHSC7VMN2YGQF5WCQC5UHELIJIWY` | Needs toast notifications for transaction success or failure. |
+| `USR-003` | Ranjan Mehta | `ranjanmehta980@gmail.com` | `GCHV2WCHD63R4MCVEIZ6BCXOLMJIEOQQAXFTG3UVKXB4QUFIPGITXJVN` | Wants button loading states during transactions to prevent double clicks. |
+| `USR-004` | Nitish Sharma | `nitinkapoor009988@gmail.com` | `GAWG4DRZUQ4SWQQIMIKVPNIKCNQK43Z66B3NPKDAUNAI7UXG4OCCTQ2R` | Wants a "Copied!" confirmation tooltip when using the copy button. |
+| `USR-005` | Abhishek Kant | `abhishek086038@gmail.com` | `GDFQXTWFZZC6OXDLSR7JWJGHVJWFSNNKC72OYPCMRH3OMZVAYVOU2D62` | Suggests clearer loading text like "Confirming on Stellar network..." instead of generic "Loading...". |
+| `USR-006` | Suraj pathak | `suurajku@gmail.com` | `GAGOXEQIO3YZJDRW5BGJ7ATBUKPV2LZP74NXYYSRCXOG4IOQILARPF7L` | Suggests a more helpful empty state message like "Create your first project to get started" instead of just "No projects". |
+| `USR-007` | Rohit sharma | `riteshkumar6529@gmail.com` | `GBMF3JE3PFDCN2QDGSTQZTGZFYYYUMU66DSHJTYZFY36AFTOWDT3K44D` | Prefers relative timestamp formats (e.g., "2 min ago") instead of raw dates and times. |
+| `USR-008` | Rohan shakya | `riteshkant098@gmail.com` | `GDXCPO2LQKQNHJNM3HPOXJPFQX676FRPZ6MEVOQL6W4OF3Q5SYPIG635` | Suggests helpful input placeholders showing examples like "Starts with G..." in wallet address fields. |
+| `USR-009` | riya Kumari | `justabhi59@gmail.com` | `GCCOJRSKNIANEBNTHQYXHF7T5XU5LE7IHZUBHY4UENW363Y7OKBWGXYO` | Wants a dark and light mode toggle to switch the app's theme. |
+| `USR-010` | Saurabh kumar | `sk8651111@gmail.com` | `GBZSDOYIT4ZTFTZ4B2HSLACQQ3Q76JFCGNDNMJOPIHCUHETCZMCNBVCN` | Wants color coded status badges (yellow for pending, green for approved, red for disputed) for instant visual clarity. |
+| `USR-011` | Rahul Kumar | `rahulkumar1995@gmail.com` | `GAJ62ZSZRAQ5BSQFPCBGY2WZUV6UFFRDKCA7OIOBFV6V22TNKQBO6F7G` | Transactions randomly fail if I paste an invalid wallet address. |
+| `USR-012` | Pooja Sharma | `poojasharma92@gmail.com` | `GAHSXEBXGBPCI4G5UUMYM3HFRONXZYGZKFMUKQIWY6VMSIKW7RMK5H7C` | I don't know what 'Funded' vs 'Created' means for my money. |
+| `USR-013` | Amit Singh | `amitsingh.dev@gmail.com` | `GBBQFY6CSQ6UJPYNMNHZ5CTFOV3ZN65YUMHI33DYGQTFKPQUBPYHTECZ` | It's hard to tell my freelancer where to find the project I just funded. |
+| `USR-014` | Neha Gupta | `nehagupta1998@gmail.com` | `GDMTELHY5KNIHAC63I4KZZ2GLLHYQQWGVNUXHXI7L7Y6L6JORFDXVKWG` | I didn't know I needed to get test XLM from Friendbot first. |
+| `USR-015` | Rohit Verma | `rohitverma94@gmail.com` | `GAR7UJBGVLQFR6RKHNDUNDKYVKYQBOEZ42ZXXIDEMTTMHZKKR5WP52RC` | I have to calculate timestamps in my head to know if I'm late. |
+
+#### 2. Feedback Implementation
+
+This table tracks the specific feedback received, the concrete improvement implemented, and the corresponding Git commit:
+
+| User ID | Name | Email | Wallet Address | Feedback Summary | Improvement Made | Git Commit ID |
+|---|---|---|---|---|---|---|
+| `USR-011` | Rahul Kumar | `rahulkumar1995@gmail.com` | `GAJ62ZSZRAQ5BSQFPCBGY2WZUV6UFFRDKCA7OIOBFV6V22TNKQBO6F7G` | Transactions randomly fail if I paste an invalid wallet address. | Added real-time Stellar address validation to the Create Project form. | [`710b479`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/710b47976485fbdab16652ce46292a9493ac02a0) |
+| `USR-012` | Pooja Sharma | `poojasharma92@gmail.com` | `GAHSXEBXGBPCI4G5UUMYM3HFRONXZYGZKFMUKQIWY6VMSIKW7RMK5H7C` | I don't know what 'Funded' vs 'Created' means for my money. | Added native tooltips to milestone status badges for non-crypto users. | [`b465d1c`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/b465d1c5c558e48bdb16f8dcd502d18e94d7ed62) |
+| `USR-013` | Amit Singh | `amitsingh.dev@gmail.com` | `GBBQFY6CSQ6UJPYNMNHZ5CTFOV3ZN65YUMHI33DYGQTFKPQUBPYHTECZ` | It's hard to tell my freelancer where to find the project I just funded. | Added a 'Copy Invite Link' button to easily share the project URL. | [`1aca8b2`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/1aca8b26b1951a1fdc1e280b5f443566869b348b) |
+| `USR-014` | Neha Gupta | `nehagupta1998@gmail.com` | `GDMTELHY5KNIHAC63I4KZZ2GLLHYQQWGVNUXHXI7L7Y6L6JORFDXVKWG` | I didn't know I needed to get test XLM from Friendbot first. | Added an interactive "How it Works" modal before wallet connection. | [`2d983d9`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/2d983d9a6914136f1bc4f2d966f53181cad811c7) |
+| `USR-015` | Rohit Verma | `rohitverma94@gmail.com` | `GAR7UJBGVLQFR6RKHNDUNDKYVKYQBOEZ42ZXXIDEMTTMHZKKR5WP52RC` | I have to calculate timestamps in my head to know if I'm late. | Introduced dynamic status badges (e.g., "Due in 3 days", "Overdue"). | [`591f292`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/591f292eab9056700af6c579c7ef9d09e43bd53e) |
+| `USR-001` | Rohan Kumar | `Rohan809raj@gmail.com` | `GDDI4YI3EKLBKAYAFONHCPGJXVATJYZQ4G7DHEZ5X3DKOBBIR6YRGC22` | Wallet address copy button lets users copy address in one click. | Added a copy button to let users copy wallet address instantly. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-002` | Rishi Singh | `rishi55443322@gmail.com` | `GB53NBNY2RWG737KLGB4ZSTZGR66IHSC7VMN2YGQF5WCQC5UHELIJIWY` | Toast notification for transactions shows a small popup instantly. | Integrated a toast notification system. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-003` | Ranjan Mehta | `ranjanmehta980@gmail.com` | `GCHV2WCHD63R4MCVEIZ6BCXOLMJIEOQQAXFTG3UVKXB4QUFIPGITXJVN` | Button loading state disables button and shows a spinner. | Added button disabling and loading spinners during transactions. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-004` | Nitish Sharma | `nitinkapoor009988@gmail.com` | `GAWG4DRZUQ4SWQQIMIKVPNIKCNQK43Z66B3NPKDAUNAI7UXG4OCCTQ2R` | Copied tooltip on click shows a quick "Copied!" confirmation. | Implemented a "Copied!" tooltip overlay. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-005` | Abhishek Kant | `abhishek086038@gmail.com` | `GDFQXTWFZZC6OXDLSR7JWJGHVJWFSNNKC72OYPCMRH3OMZVAYVOU2D62` | Specific loading text replaces "Loading..." with more details. | Updated loading state text to display network-specific status. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-006` | Suraj pathak | `suurajku@gmail.com` | `GAGOXEQIO3YZJDRW5BGJ7ATBUKPV2LZP74NXYYSRCXOG4IOQILARPF7L` | Better empty state message guides users to get started. | Replaced blank empty states with interactive helper messages. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-007` | Rohit sharma | `riteshkumar6529@gmail.com` | `GBMF3JE3PFDCN2QDGSTQZTGZFYYYUMU66DSHJTYZFY36AFTOWDT3K44D` | Relative timestamp format shows "2 min ago" instead of raw date. | Updated UI to render relative timestamps for project activities. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-008` | Rohan shakya | `riteshkant098@gmail.com` | `GDXCPO2LQKQNHJNM3HPOXJPFQX676FRPZ6MEVOQL6W4OF3Q5SYPIG635` | Input placeholder hints add helpful examples like "Starts with G...". | Added placeholder examples to form input fields. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-009` | riya Kumari | `justabhi59@gmail.com` | `GCCOJRSKNIANEBNTHQYXHF7T5XU5LE7IHZUBHY4UENW363Y7OKBWGXYO` | Dark and light mode toggle lets users switch the app's theme. | Implemented a theme context provider and toggle button in header. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
+| `USR-010` | Saurabh kumar | `sk8651111@gmail.com` | `GBZSDOYIT4ZTFTZ4B2HSLACQQ3Q76JFCGNDNMJOPIHCUHETCZMCNBVCN` | Color coded status badges use yellow, green, and red colors. | Color-coded status badges and added dynamic hover descriptions. | [`0d34d21`](https://github.com/shwetasharma44044-eng/StellarEscrowlevel5.0/commit/0d34d2104d0523d228faaf2819e3adf0c5ddb559) |
 
 ### UX/UI & Stability Improvements
 - **Guided Onboarding Modal**: Reduced first-time user friction by adding an upfront tutorial on Freighter and Friendbot.
